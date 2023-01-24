@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Player/PlayerData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+max_hp = 0
+dmg = 25
+bow_dmg = 15
+walk_speed = 50
+run_speed = 100
+air_speed = 75
+ground_acceleration = 1000
+air_acceleration = 300
+ground_deceleration = 500
+jump_strength = 200
+max_fall_speed = 500
+gravity_acceleration = 300
+accuracy_mult_idle = 0.85
+accuracy_mult_walk = 0.75
+accuracy_mult_run = 0.7
+accuracy_mult_air = 0.5
+accuracy_mult_crouch = 0.98

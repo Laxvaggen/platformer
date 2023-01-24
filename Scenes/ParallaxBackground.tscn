@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Textures/Level/_Backgrounds/Parallax Background/3-far.png" type="Texture" id=2]
+[ext_resource path="res://Textures/Level/_Backgrounds/Parallax Background/1-Background.png" type="Texture" id=3]
+[ext_resource path="res://Textures/Level/_Backgrounds/Parallax Background/2-super far.png" type="Texture" id=4]
+[ext_resource path="res://Textures/Level/_Backgrounds/Parallax Background/4-far light.png" type="Texture" id=5]
+[ext_resource path="res://Textures/Level/_Backgrounds/Parallax Background/5-close.png" type="Texture" id=6]
+[ext_resource path="res://Textures/Level/_Backgrounds/Parallax Background/6-close light.png" type="Texture" id=7]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+scale = Vector2( 2.5, 2.5 )
+transform = Transform2D( 2.5, 0, 0, 2.5, 0, 0 )
+scroll_base_scale = Vector2( 0.15, 0.15 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.25, 0.25 )
+motion_mirroring = Vector2( 314, 100 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer"]
+texture = ExtResource( 3 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.5, 0.5 )
+motion_mirroring = Vector2( 314, 100 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer2"]
+texture = ExtResource( 4 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.75, 0.75 )
+motion_mirroring = Vector2( 314, 100 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer3"]
+texture = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxLayer3"]
+texture = ExtResource( 5 )
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2( 314, 100 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer4"]
+texture = ExtResource( 6 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxLayer4"]
+texture = ExtResource( 7 )
