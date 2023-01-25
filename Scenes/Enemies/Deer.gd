@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 enum {ROAM, IDLE, EAT}
 
+var orb = preload("res://Scenes/Orb.tscn")
+
 var state = ROAM
 var health := 1
 var velocity := Vector2.ZERO
@@ -18,6 +20,8 @@ func _process(delta: float) -> void:
 	if health <= 0:
 		animation_player.play("Die")
 		$Area2D.monitorable = false
+		velocity = Vector2.ZERO
+
 	if $Sprite.flip_h:
 		$GroundFinder.position.x = -abs($GroundFinder.position.x)
 		$WallFinder.cast_to.x = -abs($WallFinder.cast_to.x )
@@ -36,6 +40,12 @@ func _physics_process(delta: float) -> void:
 	velocity.y += 200*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+func spawn_orbs() -> void:
+	for position2D in $OrbSpawn.get_children():
+		var instance = orb.instance()
+		print(position2D.global_position)
+		instance.global_position = position2D.global_position
+		get_tree().get_root().get_node("World").add_child(instance)
 
 func take_damage(damage, knockback_amount, source) -> void:
 	health -= damage

@@ -33,6 +33,20 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
+"times": PoolRealArray( 1.38 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawn_orbs"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 1.39 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -147,6 +161,8 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 rotation = 1.5708
@@ -181,5 +197,25 @@ cast_to = Vector2( 0, 2 )
 [node name="WallFinder" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 17, 0 )
+
+[node name="OrbSpawn" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="OrbSpawn"]
+position = Vector2( -22, 11 )
+
+[node name="Position2D2" type="Position2D" parent="OrbSpawn"]
+position = Vector2( -14, 11 )
+
+[node name="Position2D3" type="Position2D" parent="OrbSpawn"]
+position = Vector2( -8, 11 )
+
+[node name="Position2D4" type="Position2D" parent="OrbSpawn"]
+position = Vector2( 17, 11 )
+
+[node name="Position2D5" type="Position2D" parent="OrbSpawn"]
+position = Vector2( 21, 11 )
+
+[node name="Position2D6" type="Position2D" parent="OrbSpawn"]
+position = Vector2( 28, 11 )
 
 [connection signal="timeout" from="StateSwitchTimer" to="." method="_on_StateSwitchTimer_timeout"]
