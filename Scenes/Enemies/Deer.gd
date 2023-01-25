@@ -40,13 +40,6 @@ func _physics_process(delta: float) -> void:
 	velocity.y += 200*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
-func spawn_orbs() -> void:
-	for position2D in $OrbSpawn.get_children():
-		var instance = orb.instance()
-		print(position2D.global_position)
-		instance.global_position = position2D.global_position
-		get_tree().get_root().get_node("World").add_child(instance)
-
 func take_damage(damage, knockback_amount, source) -> void:
 	health -= damage
 	#velocity = knockback_amount

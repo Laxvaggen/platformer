@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/Enemies/Deer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Main.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Tilesets/Ancient Caves/Ancient Caves.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/ParallaxBackground.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Enemies/Crow.tscn" type="PackedScene" id=7]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
@@ -30,6 +31,9 @@ tile_data = PoolIntArray( 21, 35, 0, 23, 37, 0, 25, 36, 0, 327705, 37, 0, 327706
 scroll_base_offset = Vector2( 0, 40 )
 
 [node name="Deer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 124, 18 )
+position = Vector2( 441, 60 )
+
+[node name="Crow" parent="." instance=ExtResource( 7 )]
+position = Vector2( 190, -2 )
 
 [editable path="Ancient Caves"]
