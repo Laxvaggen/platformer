@@ -198,24 +198,4 @@ cast_to = Vector2( 0, 2 )
 enabled = true
 cast_to = Vector2( 17, 0 )
 
-[node name="OrbSpawn" type="Node2D" parent="."]
-
-[node name="Position2D" type="Position2D" parent="OrbSpawn"]
-position = Vector2( -22, 11 )
-
-[node name="Position2D2" type="Position2D" parent="OrbSpawn"]
-position = Vector2( -14, 11 )
-
-[node name="Position2D3" type="Position2D" parent="OrbSpawn"]
-position = Vector2( -8, 11 )
-
-[node name="Position2D4" type="Position2D" parent="OrbSpawn"]
-position = Vector2( 17, 11 )
-
-[node name="Position2D5" type="Position2D" parent="OrbSpawn"]
-position = Vector2( 21, 11 )
-
-[node name="Position2D6" type="Position2D" parent="OrbSpawn"]
-position = Vector2( 28, 11 )
-
 [connection signal="timeout" from="StateSwitchTimer" to="." method="_on_StateSwitchTimer_timeout"]

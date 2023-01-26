@@ -33,6 +33,9 @@ func _physics_process(delta) -> void:
 		velocity = move_and_slide(velocity, Vector2.UP)
 	elif picked_up:
 		global_position = global_position.move_toward(player.global_position, 100*delta)
+	elif owner != null:
+		if owner.is_in_group("Enemy") and owner.health <= 0:
+			call_deferred("_return_to_world")
 
 func _add_gravity(magnitude, delta) -> void:
 	velocity.y += magnitude*delta
@@ -42,7 +45,7 @@ func _stick(area) -> void:
 	get_parent().remove_child(self)
 	area.owner.add_child(self)
 
-func _return_to_world(area) -> void:
+func _return_to_world() -> void:
 	position = global_position
 	var end = get_tree().get_root().get_node("World")
 	get_parent().remove_child(self)
@@ -52,10 +55,11 @@ func _return_to_world(area) -> void:
 func _on_HurtBox_area_entered(area):
 	if !fired:
 		return
-	if area.owner.is_in_group("Enemy"):
-		area.owner.take_damage(damage, knockback_amount, self)
+	if area.owner.is_in_group("Enemy") and !collided:
+		area.owner.take_damage(25, knockback_amount, self)
+		
 		if area.owner.health <= 0:
-			call_deferred("_return_to_world", area)
+			call_deferred("_return_to_world")
 		else:
 			call_deferred("_stick", area)
 		velocity = Vector2.ZERO

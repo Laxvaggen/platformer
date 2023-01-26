@@ -74,12 +74,12 @@ animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "blue",
-"speed": 3.0
+"speed": 10.0
 }, {
 "frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
 "loop": true,
 "name": "red",
-"speed": 3.0
+"speed": 10.0
 } ]
 
 [node name="Orb" type="Area2D"]
@@ -93,5 +93,5 @@ shape = SubResource( 1 )
 position = Vector2( 1.5, -4.5 )
 frames = SubResource( 18 )
 animation = "blue"
-frame = 2
+frame = 1
 playing = true
