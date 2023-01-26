@@ -3,6 +3,7 @@ class_name PlayerData
 
 export (int) var max_hp
 export (int) var dmg
+export (float) var atk_speed
 export (int) var bow_dmg
 export (int) var walk_speed
 export (int) var run_speed

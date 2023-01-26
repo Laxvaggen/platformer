@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 max_hp = 0
 dmg = 25
+atk_speed = 1.5
 bow_dmg = 15
 walk_speed = 50
 run_speed = 100

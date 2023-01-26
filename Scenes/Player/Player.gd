@@ -29,6 +29,9 @@ func _ready():
 						"Walk":1*stats.accuracy_mult_walk,
 						"Run":1*stats.accuracy_mult_run,
 						"Air":1*stats.accuracy_mult_air}
+	$AttackResetTimer.wait_time = 0.2/stats.atk_speed
+	for collision_shape in $Hitbox.get_children():
+		collision_shape.disabled = true
 
 func _process(delta):
 	check_slots()
@@ -46,12 +49,18 @@ func _flip_children() -> void:
 		wallfinder.cast_to.x = abs(wallfinder.cast_to.x)
 		wallfindertop.cast_to.x = abs(wallfindertop.cast_to.x)
 		pivot.position.x = -abs(pivot.position.x)
+		$Hitbox/CollisionShape1.position.x = abs($Hitbox/CollisionShape1.position.x)
+		$Hitbox/CollisionShape2.position.x = abs($Hitbox/CollisionShape2.position.x)
+		$Hitbox/CollisionShape3.position.x = abs($Hitbox/CollisionShape3.position.x)
 	else:
 		sprite.flip_h = true
 		bow_sprite.flip_v = true
 		wallfinder.cast_to.x = -abs(wallfinder.cast_to.x)
 		wallfindertop.cast_to.x = -abs(wallfindertop.cast_to.x)
 		pivot.position.x = abs(pivot.position.x)
+		$Hitbox/CollisionShape1.position.x = -abs($Hitbox/CollisionShape1.position.x)
+		$Hitbox/CollisionShape2.position.x = -abs($Hitbox/CollisionShape2.position.x)
+		$Hitbox/CollisionShape3.position.x = -abs($Hitbox/CollisionShape3.position.x)
 
 func pickup_arrow(arrow:Object) -> void:
 	if arrow == null:
@@ -70,3 +79,11 @@ func check_slots() -> void:
 	for slot in arrowslots:
 		if slot.count == 0:
 			slot.arrow = null
+
+func attack_reposition(value:int) -> void:
+	global_position.x += value * facing_x
+
+
+func _on_Hitbox_area_entered(area: Area2D) -> void:
+	if area.owner.is_in_group("Enemy"):
+		area.owner.take_damage(stats.dmg, 25, self)

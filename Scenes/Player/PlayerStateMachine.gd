@@ -61,6 +61,8 @@ func get_next_state(current_state:String) -> Dictionary:
 				next_state = "WallHang"
 		else:
 			next_state = "Air"
+	elif Input.is_action_pressed("melee") and current_state != "Attack":
+		next_state = "Attack"
 	elif Input.is_action_just_pressed("jump"):
 		next_state = "Air"
 		msg["do_jump"] = true
