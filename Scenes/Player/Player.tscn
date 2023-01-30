@@ -1,20 +1,17 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Textures/Player/spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player/PlayerStateMachine.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Player/PlayerData.tres" type="Resource" id=3]
-[ext_resource path="res://Scenes/Player/IdleState.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/Hitbox.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/Player/AirState.gd" type="Script" id=6]
-[ext_resource path="res://Scenes/Player/EvadeState.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Player/Idle.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Player/Walk.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Player/Evade.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Player/Run.gd" type="Script" id=7]
 [ext_resource path="res://Textures/Player/Platformer/bow_layers/001.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=9]
-[ext_resource path="res://Scenes/Player/EdgeCatchState.gd" type="Script" id=10]
-[ext_resource path="res://Scenes/Player/WalkState.gd" type="Script" id=11]
-[ext_resource path="res://Scenes/Player/RunState.gd" type="Script" id=12]
-[ext_resource path="res://Scenes/Player/Bow.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/Player/EdgeCatch.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Player/Air.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/Player/Crouch.gd" type="Script" id=14]
-[ext_resource path="res://Scenes/Player/TakeHit.gd" type="Script" id=15]
 [ext_resource path="res://Scenes/Player/WallHang.gd" type="Script" id=16]
 [ext_resource path="res://Scenes/Player/Attack.gd" type="Script" id=17]
 
@@ -51,23 +48,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 5, 6, 7, 8, 9 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath("../Bow")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.2, 0.49 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [ null ],
-"method": "fire_arrow"
-}, {
-"args": [  ],
-"method": "exit"
-} ]
 }
 
 [sub_resource type="Animation" id=27]
@@ -650,7 +630,6 @@ vframes = 22
 frame = 180
 
 [node name="Hurtbox" type="Area2D" parent="."]
-script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 28 )
@@ -712,9 +691,6 @@ anims/Run = SubResource( 21 )
 anims/Slide = SubResource( 23 )
 anims/Walk = SubResource( 24 )
 
-[node name="Bow" type="Node" parent="."]
-script = ExtResource( 13 )
-
 [node name="PlayerStateMachine" type="Node" parent="."]
 script = ExtResource( 2 )
 initial_state = NodePath("Idle")
@@ -723,19 +699,19 @@ initial_state = NodePath("Idle")
 script = ExtResource( 4 )
 
 [node name="Walk" type="Node" parent="PlayerStateMachine"]
-script = ExtResource( 11 )
+script = ExtResource( 5 )
 
 [node name="Run" type="Node" parent="PlayerStateMachine"]
-script = ExtResource( 12 )
+script = ExtResource( 7 )
 
 [node name="Air" type="Node" parent="PlayerStateMachine"]
-script = ExtResource( 6 )
+script = ExtResource( 11 )
 
 [node name="Crouch" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 14 )
 
 [node name="Evade" type="Node" parent="PlayerStateMachine"]
-script = ExtResource( 7 )
+script = ExtResource( 6 )
 
 [node name="EdgeCatch" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 10 )
@@ -745,9 +721,6 @@ script = ExtResource( 16 )
 
 [node name="Attack" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 17 )
-
-[node name="TakeHit" type="Node" parent="PlayerStateMachine"]
-script = ExtResource( 15 )
 
 [node name="StateLockedTimer" type="Timer" parent="."]
 one_shot = true
@@ -777,8 +750,3 @@ enabled = true
 cast_to = Vector2( 0, 3 )
 
 [node name="Tween" type="Tween" parent="."]
-
-[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
-[connection signal="timeout" from="WallJumpResetTimer" to="PlayerStateMachine/WallHang" method="_on_WallJumpResetTimer_timeout"]
-[connection signal="timeout" from="AttackResetTimer" to="PlayerStateMachine/Idle" method="_on_AttackResetTimer_timeout"]
-[connection signal="timeout" from="AttackResetTimer" to="PlayerStateMachine/Attack" method="_on_AttackResetTimer_timeout"]
