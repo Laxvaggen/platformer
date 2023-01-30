@@ -13,7 +13,7 @@ func enter(_msg := {}) -> void:
 		last_attack = 2
 	elif last_attack == 2:
 		animation_player.play("Attack 3")
-		lock_state_switching(1/player.stats.atk_speed)
+		lock_state_switching(0.8/player.stats.atk_speed)
 		last_attack = 3
 	elif last_attack == 3:
 		animation_player.play("Attack 1")
@@ -25,13 +25,13 @@ func enter(_msg := {}) -> void:
 		lock_state_switching(1.4/player.stats.atk_speed)
 		last_attack = 1
 	
-	player.velocity = Vector2.ZERO
+	
 	
 func update(_delta: float) -> void:
 	pass
 
-func physics_update(_delta: float) -> void:
-	pass
+func physics_update(delta: float) -> void:
+	set_horizontal_vector(0, player.stats.ground_deceleration, delta)
 
 
 

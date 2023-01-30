@@ -110,13 +110,13 @@ tracks/1/keys = {
 "times": PoolRealArray( 0.2, 0.4, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
-"args": [ -1 ],
+"args": [ 0 ],
 "method": "attack_reposition"
 }, {
 "args": [ 3 ],
 "method": "attack_reposition"
 }, {
-"args": [ -11 ],
+"args": [ 5 ],
 "method": "attack_reposition"
 } ]
 }
@@ -208,10 +208,10 @@ tracks/1/keys = {
 "args": [ 4 ],
 "method": "attack_reposition"
 }, {
-"args": [ -1 ],
+"args": [ 0 ],
 "method": "attack_reposition"
 }, {
-"args": [ -8 ],
+"args": [ 0 ],
 "method": "attack_reposition"
 } ]
 }

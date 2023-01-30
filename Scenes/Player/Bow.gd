@@ -28,17 +28,17 @@ func enter(arrow, slot) -> void:
 
 func _get_bow_rotation(angle) -> float:
 	if !active:
-		return round(angle/TAU*64)/64.0*TAU
+		return round(angle/TAU*16)/16.0*TAU
 	if abs(angle) > PI/2:
 		player.facing_x = -1
 	else:
 		player.facing_x = 1
-	return round(angle/TAU*64)/64.0*TAU
+	return round(angle/TAU*16)/16.0*TAU
 
 func _summon_arrow(arrow) -> void:
 	var instance = arrow.instance()
 	instance.position = pivot.get_node("ArrowSpawn").position
-	instance.position.y -= 0.5
+
 	pivot.add_child(instance)
 	instance.set_owner(player)
 	arrow_instances.append(instance)
