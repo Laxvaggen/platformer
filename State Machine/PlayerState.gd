@@ -2,13 +2,14 @@ class_name PlayerState
 extends State
 
 var player: Player
-var target_velocity := Vector2.ZERO
-var acceleration := Vector2.ZERO
+var animation_player: AnimationPlayer
 
 func _ready() -> void:
 	yield(owner, "ready")
 	player = owner as Player
 	assert(player != null)
+	animation_player = player.get_node("AnimationPlayer")
+	assert(animation_player is AnimationPlayer)
 
 func update(_delta: float) -> void:
 	pass
@@ -16,14 +17,9 @@ func update(_delta: float) -> void:
 func physics_update(_delta: float) -> void:
 	pass
 
-#lock state switching
-#set_target_velocity with default parameters as current player velocity
-#set_velocity moves player velocity towards target
-#
-
-func _set_velocity() -> void:
-	if player.velocity == target_velocity:
-		return
-	
-func set_target_velocity(velocity_x:int, velocity_y: int, acceleration_x:int, acceleration_y: int) -> void:
-	pass
+func get_direction_x() -> int:
+	if Input.is_action_pressed("move_left"):
+		return -1
+	elif Input.is_action_pressed("move_right"):
+		return 1
+	return 0

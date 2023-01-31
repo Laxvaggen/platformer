@@ -1,16 +1,48 @@
 extends PlayerState
 
-func handle_input(_event: InputEvent) -> void:
-	pass
+#Available states for transition: Walk, Run, Air (jump), Crouch, Roll, Attack
 
 func update(_delta: float) -> void:
-	pass
+	_get_next_state()
 
 func physics_update(_delta: float) -> void:
-	pass
+	player.set_target_velocity(0, player.stats.ground_deceleration)
+
+func _get_next_state() -> void:
+	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+		player.set_facing_x(get_direction_x(), true)
+		if Input.is_action_pressed("sprint"):
+			state_machine.transition_to("Run")
+			return
+		else:
+			state_machine.transition_to("Walk")
+			return
+	
+	if Input.is_action_pressed("jump"):
+		state_machine.transition_to("Air", {do_jump=true})
+		return
+	
+	if Input.is_action_pressed("evade"):
+		state_machine.transition_to("Roll")
+		return
+	
+	if Input.is_action_pressed("crouch"):
+		state_machine.transition_to("Crouch")
+		return
+	
+	if Input.is_action_pressed("attack"):
+		state_machine.transition_to("Attack")
+		return
+	
+	if !player.is_on_floor():
+		state_machine.transition_to("Air")
+
 
 func enter(_msg := {}) -> void:
-	pass
+	if !_msg.has("unforce_animation"):
+		animation_player.play("Idle")
+	else:
+		animation_player.queue("Idle")
 
 func exit() -> void:
 	pass

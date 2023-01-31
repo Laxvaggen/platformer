@@ -14,6 +14,8 @@ export (int) var ground_deceleration
 export (int) var jump_strength
 export (int) var max_fall_speed
 export (int) var gravity_acceleration
+export (int) var wall_fall_speed
+export (int) var wall_acceleration
 export (float) var accuracy_mult_idle
 export (float) var accuracy_mult_walk
 export (float) var accuracy_mult_run

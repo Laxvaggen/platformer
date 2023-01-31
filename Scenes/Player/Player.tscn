@@ -1,18 +1,20 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Textures/Player/spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player/PlayerStateMachine.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Player/PlayerData.tres" type="Resource" id=3]
 [ext_resource path="res://Scenes/Player/Idle.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/Player/Walk.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/Player/Evade.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Player/Roll.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Player/Run.gd" type="Script" id=7]
 [ext_resource path="res://Textures/Player/Platformer/bow_layers/001.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=9]
-[ext_resource path="res://Scenes/Player/EdgeCatch.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Player/Edgehang.gd" type="Script" id=10]
 [ext_resource path="res://Scenes/Player/Air.gd" type="Script" id=11]
+[ext_resource path="res://Scenes/Player/Slide.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/Player/Dash.gd" type="Script" id=13]
 [ext_resource path="res://Scenes/Player/Crouch.gd" type="Script" id=14]
-[ext_resource path="res://Scenes/Player/WallHang.gd" type="Script" id=16]
+[ext_resource path="res://Scenes/Player/Wallglide.gd" type="Script" id=16]
 [ext_resource path="res://Scenes/Player/Attack.gd" type="Script" id=17]
 
 [sub_resource type="CapsuleShape2D" id=25]
@@ -256,7 +258,7 @@ tracks/0/keys = {
 "values": [ 130, 131, 132, 133, 134, 135 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("PlayerStateMachine/EdgeCatch")
+tracks/1/path = NodePath("PlayerStateMachine/Edgehang")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -655,7 +657,7 @@ shape = SubResource( 36 )
 disabled = true
 
 [node name="Pivot" type="Position2D" parent="."]
-position = Vector2( -2, 2 )
+position = Vector2( 0, 3 )
 
 [node name="BowSprite" type="Sprite" parent="Pivot"]
 texture = ExtResource( 8 )
@@ -698,26 +700,36 @@ initial_state = NodePath("Idle")
 [node name="Idle" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 4 )
 
+[node name="Air" type="Node" parent="PlayerStateMachine"]
+script = ExtResource( 11 )
+
 [node name="Walk" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 5 )
 
 [node name="Run" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 7 )
 
-[node name="Air" type="Node" parent="PlayerStateMachine"]
-script = ExtResource( 11 )
-
 [node name="Crouch" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 14 )
 
-[node name="Evade" type="Node" parent="PlayerStateMachine"]
+[node name="Roll" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 6 )
 
-[node name="EdgeCatch" type="Node" parent="PlayerStateMachine"]
+[node name="Slide" type="Node" parent="PlayerStateMachine"]
+script = ExtResource( 12 )
+
+[node name="Dash" type="Node" parent="PlayerStateMachine"]
+script = ExtResource( 13 )
+
+[node name="Edgehang" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 10 )
 
-[node name="WallHang" type="Node" parent="PlayerStateMachine"]
+[node name="Wallglide" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 16 )
+
+[node name="WallJumpResetTimer" type="Timer" parent="PlayerStateMachine/Wallglide"]
+wait_time = 1.2
+one_shot = true
 
 [node name="Attack" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 17 )
@@ -727,10 +739,6 @@ one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.1
-one_shot = true
-
-[node name="WallJumpResetTimer" type="Timer" parent="."]
-wait_time = 1.2
 one_shot = true
 
 [node name="AttackResetTimer" type="Timer" parent="."]
@@ -750,3 +758,6 @@ enabled = true
 cast_to = Vector2( 0, 3 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[connection signal="timeout" from="PlayerStateMachine/Wallglide/WallJumpResetTimer" to="PlayerStateMachine/Wallglide" method="_on_WallJumpResetTimer_timeout"]
+[connection signal="timeout" from="StateLockedTimer" to="." method="_on_StateLockedTimer_timeout"]
