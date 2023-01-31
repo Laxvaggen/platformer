@@ -14,9 +14,9 @@ func physics_update(_delta: float) -> void:
 	
 func _get_next_state() -> void:
 	if Input.is_action_pressed("jump") and can_jump:
-		player.jump()
-		player.velocity.x = player.stats.jump_strength*0.5 * player.facing_x * -1
-		player.global_position.x -= player.facing_x * 2
+		player.velocity.x = player.stats.jump_strength*0.33 * player.facing_x * -1
+		player.set_target_velocity()
+		state_machine.transition_to("Air", {do_jump=true})
 		$WallJumpResetTimer.start()
 		can_jump = false
 	if player.is_on_ground():

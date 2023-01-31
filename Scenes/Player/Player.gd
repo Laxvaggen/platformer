@@ -23,7 +23,7 @@ func _ready():
 
 func _process(delta):
 	$PlayerStateMachine.state.update(delta)
-	print($PlayerStateMachine.state)
+	#print($PlayerStateMachine.state)
 	
 func _physics_process(delta):
 	$PlayerStateMachine.state.physics_update(delta)
@@ -31,8 +31,9 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-func attack_reposition(value:int) -> void:
-	global_position.x += value * facing_x
+func reposition(x_offset:int=0, y_offset:int=0) -> void:
+	global_position.x += x_offset * facing_x
+	global_position.y += y_offset
 
 func _set_velocity(delta) -> void:
 	if velocity == target_velocity:
@@ -118,6 +119,18 @@ func is_on_ground() -> bool:
 		val = true
 	ground_finder.enabled = false
 	return val
+
+func find_edge() -> void:
+	var wall_finder_top = $WallFinderTop
+	wall_finder_top.enabled = true
+	for _i in range(10):
+		wall_finder_top.force_raycast_update()
+		if wall_finder_top.is_colliding() and wall_finder_top.get_collider().is_in_group("Level"):
+			global_position.y -= 1
+			break
+		else:
+			global_position.y += 1
+	wall_finder_top.enabled = false
 
 func _on_StateLockedTimer_timeout() -> void:
 	state_machine.state_locked = false

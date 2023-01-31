@@ -258,7 +258,7 @@ tracks/0/keys = {
 "values": [ 130, 131, 132, 133, 134, 135 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("PlayerStateMachine/Edgehang")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -267,21 +267,9 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ null, false ],
-"method": "reposition_for_climb"
+"args": [ 5, -17 ],
+"method": "reposition"
 } ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("AnimationPlayer:current_animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.59 ),
-"transitions": PoolRealArray( 1 ),
-"update": 2,
-"values": [ "Idle" ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -623,6 +611,7 @@ script = ExtResource( 9 )
 stats = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 25 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -632,11 +621,13 @@ vframes = 22
 frame = 180
 
 [node name="Hurtbox" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 28 )
 
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 16
 
@@ -657,13 +648,14 @@ shape = SubResource( 36 )
 disabled = true
 
 [node name="Pivot" type="Position2D" parent="."]
+visible = false
 position = Vector2( 0, 3 )
 
 [node name="BowSprite" type="Sprite" parent="Pivot"]
 texture = ExtResource( 8 )
 hframes = 5
 vframes = 2
-frame = 8
+frame = 5
 
 [node name="ArrowSpawn" type="Position2D" parent="Pivot"]
 position = Vector2( 6, 0 )
@@ -749,7 +741,7 @@ one_shot = true
 cast_to = Vector2( 5, 0 )
 
 [node name="WallFinderTop" type="RayCast2D" parent="."]
-position = Vector2( 0, -10 )
+position = Vector2( 0, -7 )
 cast_to = Vector2( 5, 0 )
 
 [node name="GroundFinder" type="RayCast2D" parent="."]
