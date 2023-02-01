@@ -4,10 +4,8 @@
 
 [resource]
 script = ExtResource( 1 )
-max_hp = 0
-dmg = 25
+max_hp = 100
 atk_speed = 1.5
-bow_dmg = 15
 walk_speed = 50
 run_speed = 100
 air_speed = 75
@@ -20,8 +18,3 @@ max_fall_speed = 500
 gravity_acceleration = 500
 wall_fall_speed = 50
 wall_acceleration = 1000
-accuracy_mult_idle = 0.85
-accuracy_mult_walk = 0.75
-accuracy_mult_run = 0.7
-accuracy_mult_air = 0.5
-accuracy_mult_crouch = 0.98

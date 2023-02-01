@@ -5,8 +5,11 @@ extends PlayerState
 func update(_delta: float) -> void:
 	_get_next_state()
 	if animation_player.current_animation == "Jump" and player.velocity.y >= 0:
-		animation_player.play("Jump to Fall Transition", -1, 1.5)
-		animation_player.animation_set_next("Jump to Fall Transition", "Fall")
+		if player.close_to_wall():
+			animation_player.play("Fall")
+		else:
+			animation_player.play("Jump to Fall Transition", -1, 1.5)
+			animation_player.animation_set_next("Jump to Fall Transition", "Fall")
 
 func physics_update(_delta: float) -> void:
 	player.set_target_velocity(player.stats.air_speed*get_direction_x(), player.stats.air_acceleration, 

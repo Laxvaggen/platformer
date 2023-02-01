@@ -12,7 +12,7 @@ var direction_x := facing_x
 
 
 
-onready var hp: int = stats.max_hp
+onready var health: int = stats.max_hp
 
 onready var state_locked_timer = $StateLockedTimer
 onready var state_machine  = $PlayerStateMachine
@@ -26,15 +26,18 @@ func _process(delta):
 	
 func _physics_process(delta):
 	$PlayerStateMachine.state.physics_update(delta)
-	_set_velocity(delta)
+	_move(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+func take_damage(damage:int, knockback:Vector2) -> void:
+	health -= damage
+	velocity = knockback
 
 func reposition(x_offset:int=0, y_offset:int=0) -> void:
 	global_position.x += x_offset * facing_x
 	global_position.y += y_offset
 
-func _set_velocity(delta) -> void:
+func _move(delta) -> void:
 	if velocity == target_velocity:
 		return
 	var x_velocity = move_toward(velocity.x, target_velocity.x, acceleration.x*delta)
@@ -147,6 +150,16 @@ func find_edge() -> void:
 func close_to_ground() -> bool:
 	var val := false
 	var raycast = $CloseToGroundRaycast
+	raycast.enabled = true
+	raycast.force_raycast_update()
+	if raycast.is_colliding() and raycast.get_collider().is_in_group("Level"):
+		val = true
+	raycast.enabled = false
+	return val
+
+func close_to_wall() -> bool:
+	var val := false
+	var raycast = $CloseToWallRaycast
 	raycast.enabled = true
 	raycast.force_raycast_update()
 	if raycast.is_colliding() and raycast.get_collider().is_in_group("Level"):
