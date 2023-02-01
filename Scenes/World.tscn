@@ -25,5 +25,6 @@ tile_data = PoolIntArray( 21, 35, 0, 23, 37, 0, 25, 36, 0, 327705, 37, 0, 327706
 scroll_base_offset = Vector2( 0, 40 )
 
 [node name="DualSlicer" parent="." instance=ExtResource( 1 )]
+position = Vector2( 458, 65 )
 
 [editable path="Ancient Caves"]

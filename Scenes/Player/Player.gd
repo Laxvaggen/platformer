@@ -64,20 +64,28 @@ func set_facing_x(direction, force_look_forward=true) -> void:
 		return
 	if direction == facing_x:
 		return
+
+	flip_children(direction, self)
+	
+	facing_x = direction
+	if force_look_forward:
+		direction_x = direction
+
+func flip_children(direction, target) -> void:
+	if target == null:
+		return
 	var sprite_face_left:= false
 	if direction == -1:
 		sprite_face_left = true
-
-	for child in get_children():
+	for child in target.get_children():
 		if child.get("position"):
 			child.position.x *= -1
 		if child is Sprite:
 			child.flip_h = sprite_face_left
 		if child is RayCast2D:
 			child.cast_to.x *= -1
-	facing_x = direction
-	if force_look_forward:
-		direction_x = direction
+		flip_children(direction, child)
+
 
 func jump(strength_multiplier:=1) -> void:
 	velocity.y = -stats.jump_strength*strength_multiplier

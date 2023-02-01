@@ -119,6 +119,8 @@ attack={
 2d_physics/layer_2="hitboxes"
 2d_physics/layer_3="hurtboxes"
 2d_physics/layer_4="pickups"
+2d_physics/layer_5="players"
+2d_physics/layer_6="enemies"
 
 [physics]
 

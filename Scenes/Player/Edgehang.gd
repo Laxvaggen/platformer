@@ -12,7 +12,7 @@ func _get_next_state() -> void:
 	if !player.is_on_edge():
 		state_machine.transition_to("Air")
 		return
-	if Input.is_action_pressed("jump"):
+	if Input.is_action_pressed("jump") and !state_machine.state_locked:
 		player.set_velocity(player.stats.jump_strength*0.33 * player.facing_x * -1)
 		state_machine.transition_to("Air", {do_jump=true})
 		return
@@ -32,6 +32,7 @@ func enter(_msg := {}) -> void:
 	player.set_velocity(0, 0)
 	player.find_edge()
 	animation_player.play("Catch Edge")
+	player.lock_state_switching(0.25)
 	
 
 func exit() -> void:
