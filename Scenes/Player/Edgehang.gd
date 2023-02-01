@@ -13,22 +13,24 @@ func _get_next_state() -> void:
 		state_machine.transition_to("Air")
 		return
 	if Input.is_action_pressed("jump"):
-		player.velocity.x = player.stats.jump_strength*0.33 * player.facing_x * -1
+		player.set_velocity(player.stats.jump_strength*0.33 * player.facing_x * -1)
 		state_machine.transition_to("Air", {do_jump=true})
-		player.set_target_velocity()
 		return
 	
 	if (Input.is_action_pressed("move_left") and player.facing_x == -1) or (Input.is_action_pressed("move_right") and player.facing_x == 1):
 		animation_player.play("Climb from Ledge")
-		state_machine.transition_to("Idle", {unforce_anim=false})
-		player.lock_state_switching(0.6)
+		state_machine.transition_to("Idle", {unforce_animation=true})
+		player.lock_state_switching(0.5)
+		return
+	if Input.is_action_pressed("crouch"):
+		player.global_position.y += 2
+		state_machine.transition_to("Wallglide")
 		return
 
 
 func enter(_msg := {}) -> void:
+	player.set_velocity(0, 0)
 	player.find_edge()
-	player.velocity.y = 0
-	player.set_target_velocity()
 	animation_player.play("Catch Edge")
 	
 

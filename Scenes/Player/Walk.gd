@@ -20,7 +20,10 @@ func _get_next_state() -> void:
 		state_machine.transition_to("Air", {do_jump=true})
 		return
 	if Input.is_action_pressed("crouch"):
-		state_machine.transition_to("Crouch")
+		if player.is_on_platform():
+			state_machine.transition_to("Air", {drop=true})
+		else:
+			state_machine.transition_to("Crouch")
 		return
 	if Input.is_action_pressed("evade"):
 		state_machine.transition_to("Roll")

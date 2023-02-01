@@ -3,9 +3,12 @@ extends Node
 
 signal transitioned(state_name)
 
+var state_locked := false
+
 export var initial_state := NodePath()
 
 onready var state: State = get_node(initial_state)
+
 
 func _ready() -> void:
 	yield(owner, "ready")
@@ -23,7 +26,7 @@ func _physics_process(delta: float) -> void:
 	state.physics_update(delta)
 
 func transition_to(target_state_name: String, msg: Dictionary = {}) -> void:
-	if not has_node(target_state_name):
+	if not has_node(target_state_name) or state_locked:
 		return
 	
 	state.exit()

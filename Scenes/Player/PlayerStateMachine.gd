@@ -1,7 +1,7 @@
 extends StateMachine
 
 var player: Player
-var state_locked := false
+
 
 
 func _ready() -> void:

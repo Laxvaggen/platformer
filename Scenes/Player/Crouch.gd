@@ -4,15 +4,23 @@ extends PlayerState
 
 func update(_delta: float) -> void:
 	_get_next_state()
+	player.set_facing_x(get_direction_x())
 
 func physics_update(_delta: float) -> void:
-	pass
+	player.set_target_velocity(0, player.stats.ground_deceleration)
+	
 
 func _get_next_state() -> void:
-	pass
+	if Input.is_action_pressed("evade"):
+		state_machine.transition_to("Roll")
+		return
+	if !Input.is_action_pressed("crouch") and !player.low_ceiling():
+			state_machine.transition_to("Idle")
+			return
 
 func enter(_msg := {}) -> void:
-	pass
+	animation_player.play("Crouch")
+	player.set_collision_shape("low")
 
 func exit() -> void:
-	pass
+	player.set_collision_shape("high")

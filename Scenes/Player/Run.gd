@@ -19,7 +19,9 @@ func _get_next_state() -> void:
 	if Input.is_action_pressed("evade"):
 		state_machine.transition_to("Slide")
 		return
-	
+	if Input.is_action_pressed("crouch") and player.is_on_platform():
+		state_machine.transition_to("Air", {drop=true})
+		return
 	
 	if !player.is_on_ground():
 		state_machine.transition_to("Air")

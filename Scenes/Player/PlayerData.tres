@@ -15,6 +15,7 @@ ground_acceleration = 1000
 air_acceleration = 300
 ground_deceleration = 500
 jump_strength = 200
+dash_strength = 250
 max_fall_speed = 500
 gravity_acceleration = 500
 wall_fall_speed = 50

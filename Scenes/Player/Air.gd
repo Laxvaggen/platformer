@@ -5,7 +5,7 @@ extends PlayerState
 func update(_delta: float) -> void:
 	_get_next_state()
 	if animation_player.current_animation == "Jump" and player.velocity.y >= 0:
-		animation_player.play("Jump to Fall Transition")
+		animation_player.play("Jump to Fall Transition", -1, 1.5)
 		animation_player.animation_set_next("Jump to Fall Transition", "Fall")
 
 func physics_update(_delta: float) -> void:
@@ -33,6 +33,14 @@ func enter(_msg := {}) -> void:
 	if _msg.has("do_jump"):
 		animation_player.play("Jump")
 		player.jump()
+	elif _msg.has("drop"):
+		player.global_position.y += 2
+		animation_player.play("Jump to Fall Transition", -1, 1.5)
+		animation_player.animation_set_next("Jump to Fall Transition", "Fall")
+		player.lock_state_switching(0.2)
+	elif _msg.has("play_transition"):
+		animation_player.play("Jump to Fall Transition", -1, 1.5)
+		animation_player.animation_set_next("Jump to Fall Transition", "Fall")
 	else:
 		animation_player.play("Fall")
 
