@@ -20,10 +20,11 @@ onready var state_machine  = $PlayerStateMachine
 func _ready():
 	$Pivot.visible = false
 	$PlayerStateMachine/Attack/AttackResetTimer.wait_time = 0.2/stats.atk_speed
+	$AnimationPlayer.animation_set_next("Jump to Fall Transition", "Fall")
 
 func _process(delta):
 	$PlayerStateMachine.state.update(delta)
-	
+
 func _physics_process(delta):
 	$PlayerStateMachine.state.physics_update(delta)
 	_move(delta)
@@ -32,6 +33,7 @@ func _physics_process(delta):
 func take_damage(damage:int, knockback:Vector2) -> void:
 	health -= damage
 	velocity = knockback
+	state_machine.transition_to("Hit")
 
 func reposition(x_offset:int=0, y_offset:int=0) -> void:
 	global_position.x += x_offset * facing_x
@@ -91,6 +93,13 @@ func jump(strength_multiplier:=1) -> void:
 	velocity.y = -stats.jump_strength*strength_multiplier
 	global_position.y -= 2
 
+func _get_coyote() -> bool:
+	var coyote_timer = $CoyoteTimer
+	if coyote_timer.is_stopped():
+		return false
+	else:
+		return true
+
 func is_on_edge() -> bool:
 	var val := false
 	var wall_finder = $WallFinder
@@ -119,7 +128,6 @@ func is_on_wall() -> bool:
 	if wall_finder.is_colliding() and wall_finder.get_collider().is_in_group("Level"):
 		if wall_finder_top.is_colliding() and wall_finder_top.get_collider().is_in_group("Level"):
 			val = true
-		pass
 	wall_finder.enabled = false
 	wall_finder_top.enabled = false
 	return val
@@ -133,7 +141,7 @@ func is_on_ground() -> bool:
 		val = true
 	ground_finder.enabled = false
 	return val
-	
+
 func is_on_platform() -> bool:
 	var val := false
 	var ground_finder = $GroundFinder

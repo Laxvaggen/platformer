@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Textures/Player/spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player/PlayerStateMachine.gd" type="Script" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://Scenes/Player/Attack.gd" type="Script" id=17]
 [ext_resource path="res://DamageBoxes/Hitbox.gd" type="Script" id=18]
 [ext_resource path="res://DamageBoxes/Hurtbox.gd" type="Script" id=19]
+[ext_resource path="res://Scenes/Player/Hit.gd" type="Script" id=20]
 
 [sub_resource type="CapsuleShape2D" id=25]
 radius = 4.0
@@ -110,7 +111,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.4, 0.7 ),
+"times": PoolRealArray( 0.4, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -175,13 +176,25 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 210, 211, 212, 213, 214, 215, 216, 217, 218, 219 ]
 }
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
+tracks/1/type = "value"
+tracks/1/path = NodePath("Hitbox/CollisionShape3:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
+"times": PoolRealArray( 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
@@ -461,6 +474,30 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 180 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Hitbox/CollisionShape1:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hitbox/CollisionShape2:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=20]
 resource_name = "Roll"
@@ -601,6 +638,8 @@ shape = SubResource( 41 )
 
 [node name="HitBox" type="Area2D" parent="."]
 script = ExtResource( 18 )
+damage = 50
+knockback = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2( 10, 1 )
@@ -715,11 +754,13 @@ one_shot = true
 [node name="RangedAttack" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 15 )
 
+[node name="Hit" type="Node" parent="PlayerStateMachine"]
+script = ExtResource( 20 )
+
 [node name="StateLockedTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
-wait_time = 0.1
 one_shot = true
 
 [node name="WallFinder" type="RayCast2D" parent="."]
