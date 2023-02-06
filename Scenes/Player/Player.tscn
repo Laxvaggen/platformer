@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Textures/Player/spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player/PlayerStateMachine.gd" type="Script" id=2]
@@ -20,6 +20,9 @@
 [ext_resource path="res://DamageBoxes/Hitbox.gd" type="Script" id=18]
 [ext_resource path="res://DamageBoxes/Hurtbox.gd" type="Script" id=19]
 [ext_resource path="res://Scenes/Player/Hit.gd" type="Script" id=20]
+[ext_resource path="res://Scenes/Player/Shield.gd" type="Script" id=21]
+[ext_resource path="res://Scenes/Player/BowSprite.gd" type="Script" id=22]
+[ext_resource path="res://Scenes/Player/BowPivot.gd" type="Script" id=23]
 
 [sub_resource type="CapsuleShape2D" id=25]
 radius = 4.0
@@ -40,6 +43,9 @@ height = 4.0
 [sub_resource type="CapsuleShape2D" id=40]
 radius = 9.8995
 height = 6.0
+
+[sub_resource type="CapsuleShape2D" id=42]
+radius = 5.0
 
 [sub_resource type="Animation" id=26]
 resource_name = "Bow Fire"
@@ -177,33 +183,16 @@ tracks/0/keys = {
 "values": [ 210, 211, 212, 213, 214, 215, 216, 217, 218, 219 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Hitbox/CollisionShape3:disabled")
+tracks/1/path = NodePath("HitBox/CollisionShape2D3:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.3, 0.5 ),
+"times": PoolRealArray( 0.3, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
-}
-tracks/2/type = "method"
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [ 1, 0 ],
-"method": "reposition"
-}, {
-"args": [ 4, 0 ],
-"method": "reposition"
-} ]
 }
 
 [sub_resource type="Animation" id=32]
@@ -283,17 +272,19 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 40, 41, 42, 43 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2, 6 ), Vector2( -2, 6 ), Vector2( -2, 6 ), Vector2( -2, 6 ) ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ -2.0, 6.0 ],
+"method": "set_own_position"
+} ]
 }
 
 [sub_resource type="Animation" id=37]
@@ -329,17 +320,19 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 100, 101, 102, 103 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2, 2 ), Vector2( -2, 2 ), Vector2( -2, 2 ), Vector2( -2, 2 ) ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+} ]
 }
 
 [sub_resource type="Animation" id=14]
@@ -374,17 +367,25 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 140, 141, 142, 143, 144, 145 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2, 2 ), Vector2( -2, 2 ), Vector2( -2, 1 ), Vector2( -2, 1 ), Vector2( -2, 1 ), Vector2( -2, 2 ) ]
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 1.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+} ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -403,17 +404,19 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 80, 81, 82, 83 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2, 0 ), Vector2( -2, 0 ), Vector2( -2, 0 ), Vector2( -2, 0 ) ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ -2.0, 0.0 ],
+"method": "set_own_position"
+} ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -431,8 +434,8 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 90, 91, 92, 93 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -440,8 +443,19 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2, 2 ), Vector2( -4, 1 ), Vector2( -3, 2 ), Vector2( -4, 3 ) ]
+"values": [ {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -4.0, 1.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -3.0, 2.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -4.0, 3.0 ],
+"method": "set_own_position"
+} ]
 }
 
 [sub_resource type="Animation" id=19]
@@ -472,31 +486,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 180 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Hitbox/CollisionShape1:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Hitbox/CollisionShape2:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
+"values": [ 220 ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -530,17 +520,28 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 160, 161, 162, 163, 164, 165 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2, 1 ), Vector2( -2, 2 ), Vector2( -2, 2 ), Vector2( -2, 1 ), Vector2( -2, 2 ), Vector2( -2, 2 ) ]
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ -2.0, 1.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 1.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+} ]
 }
 
 [sub_resource type="Animation" id=22]
@@ -558,8 +559,8 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 170, 171, 172, 173 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -567,8 +568,67 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 0.0, 3.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -1.0, 4.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 3.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+} ]
+}
+
+[sub_resource type="Animation" id=43]
+resource_name = "Shield Hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 3 ), Vector2( -1, 4 ), Vector2( -2, 3 ), Vector2( -2, 2 ) ]
+"values": [ 240, 241, 242 ]
+}
+
+[sub_resource type="Animation" id=44]
+resource_name = "Shield Idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 230 ]
+}
+
+[sub_resource type="Animation" id=45]
+resource_name = "Shield Ready"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 220, 221, 222 ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -604,17 +664,28 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 150, 151, 152, 153, 154, 155 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot:position")
+tracks/1/type = "method"
+tracks/1/path = NodePath("BowPivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Vector2( -2, 2 ), Vector2( -2, 2 ), Vector2( -2, 1 ), Vector2( -2, 2 ), Vector2( -2, 2 ), Vector2( -2, 1 ) ]
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 1.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 2.0 ],
+"method": "set_own_position"
+}, {
+"args": [ -2.0, 1.0 ],
+"method": "set_own_position"
+} ]
 }
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
@@ -653,26 +724,34 @@ rotation = -0.785398
 shape = SubResource( 40 )
 disabled = true
 
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="HitBox"]
+position = Vector2( 15, 2 )
+rotation = 1.5708
+shape = SubResource( 42 )
+disabled = true
+
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 10
-vframes = 22
-frame = 180
+vframes = 25
+frame = 220
 
-[node name="Pivot" type="Position2D" parent="."]
-visible = false
+[node name="BowPivot" type="Position2D" parent="."]
 position = Vector2( -2, 2 )
+script = ExtResource( 23 )
 
-[node name="BowSprite" type="Sprite" parent="Pivot"]
+[node name="BowSprite" type="Sprite" parent="BowPivot"]
 texture = ExtResource( 8 )
 hframes = 5
 vframes = 2
-frame = 5
+frame = 9
+script = ExtResource( 22 )
+no_flip = true
 
-[node name="ArrowSpawn" type="Position2D" parent="Pivot"]
+[node name="ArrowSpawn" type="Position2D" parent="BowPivot"]
 position = Vector2( 6, 0 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BowPivot"]
 "anims/Bow Fire" = SubResource( 26 )
 "anims/Bow Ready" = SubResource( 27 )
 
@@ -695,6 +774,9 @@ anims/RESET = SubResource( 33 )
 anims/Roll = SubResource( 20 )
 anims/Run = SubResource( 21 )
 "anims/Run Stop" = SubResource( 22 )
+"anims/Shield Hit" = SubResource( 43 )
+"anims/Shield Idle" = SubResource( 44 )
+"anims/Shield Ready" = SubResource( 45 )
 anims/Slide = SubResource( 23 )
 anims/Walk = SubResource( 24 )
 
@@ -751,6 +833,9 @@ script = ExtResource( 17 )
 wait_time = 0.2
 one_shot = true
 
+[node name="Shield" type="Node" parent="PlayerStateMachine"]
+script = ExtResource( 21 )
+
 [node name="RangedAttack" type="Node" parent="PlayerStateMachine"]
 script = ExtResource( 15 )
 
@@ -761,6 +846,7 @@ script = ExtResource( 20 )
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.2
 one_shot = true
 
 [node name="WallFinder" type="RayCast2D" parent="."]
@@ -792,3 +878,4 @@ cast_to = Vector2( 0, -10 )
 [connection signal="timeout" from="PlayerStateMachine/Wallglide/WallJumpResetTimer" to="PlayerStateMachine/Wallglide" method="_on_WallJumpResetTimer_timeout"]
 [connection signal="timeout" from="PlayerStateMachine/Attack/AttackResetTimer" to="PlayerStateMachine/Attack" method="_on_AttackResetTimer_timeout"]
 [connection signal="timeout" from="StateLockedTimer" to="." method="_on_StateLockedTimer_timeout"]
+[connection signal="timeout" from="CoyoteTimer" to="PlayerStateMachine/Air" method="_on_CoyoteTimer_timeout"]

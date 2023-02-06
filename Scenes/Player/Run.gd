@@ -25,6 +25,9 @@ func _get_next_state() -> void:
 	if !Input.is_action_pressed("sprint"):
 		state_machine.transition_to("Walk")
 		return
+	if Input.is_action_pressed("attack"):
+		state_machine.transition_to("Attack", {stab=true})
+		return
 	
 	if !player.is_on_ground():
 		state_machine.transition_to("Air")

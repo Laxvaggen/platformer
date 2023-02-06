@@ -18,10 +18,9 @@ var velocity := Vector2.ZERO
 var direction_x := 1
 
 var pursue_target: KinematicBody2D
-var attack_range: = 35
-var start_attack_combo_range: = 20
 var last_attack := 0
 var state_locked := false
+var queue_die := false
 
 
 onready var animation_player = $AnimationPlayer
@@ -69,11 +68,11 @@ func pause_attacks() -> void:
 	animation_player.stop(false)
 	$AttackCooldown.start()
 
-func take_damage(damage: int, knockback: Vector2) -> void:
-	
+func take_damage(damage: int, knockback: Vector2, source) -> void:
 	health -= damage
 	if state == ATTACK:
 		_exit_attack_state()
+	pursue_target = source
 	_enter_damaged_state(knockback)
 
 func _roam_state(_delta) -> void:
@@ -85,10 +84,6 @@ func _pursue_state(_delta) -> void:
 		return
 	if !is_on_ground() or is_on_wall():
 		_enter_roam_state()
-		velocity = Vector2.ZERO
-		return
-	if (global_position - pursue_target.global_position).length() <= start_attack_combo_range:
-		_enter_attack_state()
 		velocity = Vector2.ZERO
 		return
 	if global_position.x - pursue_target.global_position.x < 0:
@@ -108,20 +103,30 @@ func _damaged_state(_delta) -> void:
 
 func _die_state(_delta) -> void:
 	apply_gravity(_delta)
+	if is_on_ground():
+		velocity.x = 0
 
 func _enter_roam_state() -> void:
+	if state_locked:
+		return
 	animation_player.play("Idle")
 	state = ROAM
 
 func _enter_pursue_state() -> void:
+	if state_locked:
+		return
 	animation_player.play("Walk")
 	state = PURSUE
 
 func _enter_attack_state() -> void:
+	if state_locked:
+		return
 	start_attack()
 	state = ATTACK
 
 func _enter_damaged_state(knockback) -> void:
+	if state_locked:
+		return
 	animation_player.play("Hit")
 	velocity = knockback
 	if health <= 0:
@@ -136,9 +141,12 @@ func _exit_attack_state() -> void:
 	$VFXSprite.visible = false
 
 func _enter_die_state() -> void:
-	state_locked = true
 	animation_player.queue("Die")
-	velocity = Vector2.ZERO
+	for child in get_children():
+		if child is Area2D:
+			child.set_deferred("monitorable", false)
+			child.set_deferred("monitoring", false)
+	state_locked = true
 	state = DIE
 
 func set_facing_x(direction, force_look_forward=true) -> void:
@@ -166,22 +174,27 @@ func flip_children(direction, target) -> void:
 		flip_children(direction, child)
 
 
-func _on_PlayerDetector_body_entered(body: Node) -> void:
-	if state_locked:
-		return
-	if body.is_in_group("Player"):
-		if state == ATTACK:
-			_exit_attack_state()
-		pursue_target = body
-		_enter_pursue_state()
-
 func _on_AttackCooldown_timeout() -> void:
 	if state != ATTACK:
-		return
-	if (global_position - pursue_target.global_position).length() > attack_range:
-		if state == ATTACK:
-			_exit_attack_state()
 		_enter_pursue_state()
 		return
 	else:
 		animation_player.play()
+
+func _on_Vision_body_entered(body: Node) -> void:
+	if state_locked:
+		return
+	if body.is_in_group("Player") and state != ATTACK:
+		pursue_target = body
+		_enter_pursue_state()
+
+func _on_AttackRange_body_entered(body: Node) -> void:
+	if !body.is_in_group("Player") or state == ATTACK:
+		return
+	if global_position.x - pursue_target.global_position.x < 0:
+		set_facing_x(1)
+	else:
+		set_facing_x(-1)
+	_enter_attack_state()
+	velocity = Vector2.ZERO
+	return

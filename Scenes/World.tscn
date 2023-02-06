@@ -1,14 +1,26 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Enemies/Dual Slicer/DualSlicer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Enemies/SlicerTrap/SlicerTrap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Tilesets/Ancient Caves/Ancient Caves.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Textures/pictureLightMask2_thumb.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/ParallaxBackground.tscn" type="PackedScene" id=6]
 
 [node name="World" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
+modulate = Color( 0.490196, 0.490196, 0.490196, 1 )
 z_index = 1
+
+[node name="Light2D" type="Light2D" parent="Player"]
+texture = ExtResource( 5 )
+shadow_enabled = true
+
+[node name="Light2D2" type="Light2D" parent="Player"]
+texture = ExtResource( 5 )
+mode = 3
+shadow_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
@@ -25,6 +37,12 @@ tile_data = PoolIntArray( 21, 35, 0, 23, 37, 0, 25, 36, 0, 327705, 37, 0, 327706
 scroll_base_offset = Vector2( 0, 40 )
 
 [node name="DualSlicer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 458, 65 )
+position = Vector2( 76, 23 )
+
+[node name="DualSlicer2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 250, -18 )
+
+[node name="SlicerTrap" parent="." instance=ExtResource( 2 )]
+position = Vector2( 207, -4 )
 
 [editable path="Ancient Caves"]

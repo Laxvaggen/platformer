@@ -5,6 +5,8 @@ extends PlayerState
 var last_attack: int
 
 onready var attack_reset_timer = $AttackResetTimer
+onready var tween = $"../../Tween"
+
 
 func update(_delta: float) -> void:
 	
@@ -16,15 +18,16 @@ func update(_delta: float) -> void:
 func physics_update(_delta: float) -> void:
 	pass
 
-func _play_next_attack() -> void:
+func _play_next_attack(stab:bool=false) -> void:
+	if stab:
+		animation_player.play("Attack 3",-1, player.stats.atk_speed)
+		player.lock_state_switching(0.8/player.stats.atk_speed)
+		attack_reset_timer.start(1.2/player.stats.atk_speed)
+		return
 	if last_attack == 1:
 		animation_player.play("Attack 2",-1, player.stats.atk_speed)
 		player.lock_state_switching(0.6/player.stats.atk_speed)
 		attack_reset_timer.start(1/player.stats.atk_speed)
-	#elif last_attack == 2:
-	#	animation_player.play("Attack 3",-1, player.stats.atk_speed)
-	#	player.lock_state_switching(0.8/player.stats.atk_speed)
-	#	attack_reset_timer.start(1.2/player.stats.atk_speed)
 	else:
 		animation_player.play("Attack 1",-1, player.stats.atk_speed)
 		player.lock_state_switching(1/player.stats.atk_speed)
@@ -58,13 +61,19 @@ func _get_next_state() -> void:
 		return
 	
 	if !player.is_on_ground():
+		player.unlock_state_switching()
 		state_machine.transition_to("Air")
 		return
 
 
 func enter(_msg := {}) -> void:
-	_play_next_attack()
-	player.set_velocity(0, 0)
+	if _msg.has("stab"):
+		_play_next_attack(true)
+		player.set_target_velocity(0, player.stats.ground_deceleration*0.5)
+	else:
+		_play_next_attack()
+		player.set_velocity(0, 0)
+	
 
 func exit() -> void:
 	attack_reset_timer.stop()

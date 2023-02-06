@@ -2,6 +2,9 @@ extends PlayerState
 
 #Available states for transition: Idle, Dash, EdgeCatch, WallHang, Attack(?)
 
+onready var coyote_timer = $"../../CoyoteTimer"
+var coyote := false
+
 func update(_delta: float) -> void:
 	_get_next_state()
 	if animation_player.current_animation == "Jump" and player.velocity.y >= 0:
@@ -21,7 +24,11 @@ func _get_next_state() -> void:
 	if Input.is_action_pressed("evade"):
 		state_machine.transition_to("Dash")
 		return
-	
+	if Input.is_action_just_pressed("jump") and coyote:
+		animation_player.play("Jump")
+		player.jump()
+		coyote_timer.stop()
+		coyote = false
 	if player.is_on_ground():
 		state_machine.transition_to("Idle")
 		return
@@ -46,7 +53,15 @@ func enter(_msg := {}) -> void:
 		animation_player.animation_set_next("Jump to Fall Transition", "Fall")
 	else:
 		animation_player.play("Fall")
+		coyote_timer.start()
+		coyote = true
+	
 
 
 func exit() -> void:
-	pass
+	coyote_timer.stop()
+	coyote = false
+
+
+func _on_CoyoteTimer_timeout() -> void:
+	coyote = false

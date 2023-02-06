@@ -3,6 +3,8 @@ extends KinematicBody2D
 
 export (Resource) var stats
 
+signal hit
+
 var velocity := Vector2.ZERO
 var target_velocity := Vector2.ZERO
 var acceleration := Vector2.ZERO
@@ -18,7 +20,7 @@ onready var state_locked_timer = $StateLockedTimer
 onready var state_machine  = $PlayerStateMachine
 
 func _ready():
-	$Pivot.visible = false
+	$BowPivot.visible = false
 	$PlayerStateMachine/Attack/AttackResetTimer.wait_time = 0.2/stats.atk_speed
 	$AnimationPlayer.animation_set_next("Jump to Fall Transition", "Fall")
 
@@ -30,10 +32,14 @@ func _physics_process(delta):
 	_move(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
-func take_damage(damage:int, knockback:Vector2) -> void:
-	health -= damage
-	velocity = knockback
-	state_machine.transition_to("Hit")
+func take_damage(damage:int, knockback:Vector2, _source) -> void:
+	if state_machine.state == state_machine.get_node("Shield"):
+		state_machine.get_node("Shield").receive_hit()
+		#stun source
+	else:
+		state_machine.transition_to("Hit")
+		health -= damage
+		velocity = knockback
 
 func reposition(x_offset:int=0, y_offset:int=0) -> void:
 	global_position.x += x_offset * facing_x
@@ -61,6 +67,10 @@ func lock_state_switching(time) -> void:
 	state_machine.state_locked = true
 	state_locked_timer.start()
 
+func unlock_state_switching() -> void:
+	state_locked_timer.stop()
+	state_machine.state_locked = false
+
 func set_facing_x(direction, force_look_forward=true) -> void:
 	if !abs(direction) == 1:
 		return
@@ -80,12 +90,16 @@ func flip_children(direction, target) -> void:
 	if direction == -1:
 		sprite_face_left = true
 	for child in target.get_children():
-		if child.get("position"):
-			child.position.x *= -1
-		if child is Sprite:
-			child.flip_h = sprite_face_left
-		if child is RayCast2D:
-			child.cast_to.x *= -1
+		if child.get("no_flip"):
+			pass
+		else:
+			if child.get("position"):
+				child.position.x *= -1
+			if child is Sprite:
+				child.flip_h = sprite_face_left
+			if child is RayCast2D:
+				child.cast_to.x *= -1
+				
 		flip_children(direction, child)
 
 
