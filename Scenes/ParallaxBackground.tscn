@@ -10,6 +10,7 @@
 [node name="ParallaxBackground" type="ParallaxBackground"]
 scale = Vector2( 2.5, 2.5 )
 transform = Transform2D( 2.5, 0, 0, 2.5, 0, 0 )
+scroll_base_offset = Vector2( 0, 60 )
 scroll_base_scale = Vector2( 0.15, 0.15 )
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
@@ -34,6 +35,7 @@ motion_mirroring = Vector2( 314, 100 )
 texture = ExtResource( 2 )
 
 [node name="Sprite2" type="Sprite" parent="ParallaxLayer3"]
+visible = false
 texture = ExtResource( 5 )
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
@@ -43,4 +45,5 @@ motion_mirroring = Vector2( 314, 100 )
 texture = ExtResource( 6 )
 
 [node name="Sprite2" type="Sprite" parent="ParallaxLayer4"]
+visible = false
 texture = ExtResource( 7 )

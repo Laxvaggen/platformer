@@ -27,8 +27,10 @@ func enter(_msg := {}) -> void:
 	tween.start()
 	player.lock_state_switching(0.5)
 	player.set_collision_shape("low")
+	$"../../HurtBox".monitoring = false
 	
 func exit() -> void:
 	player.set_velocity(0, 0)
 	tween.stop(player)
 	player.set_collision_shape("high")
+	$"../../HurtBox".monitoring = true

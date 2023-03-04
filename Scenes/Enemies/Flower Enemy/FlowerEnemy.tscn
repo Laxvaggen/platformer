@@ -1,0 +1,160 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://DamageBoxes/Hitbox.gd" type="Script" id=1]
+[ext_resource path="res://DamageBoxes/Hurtbox.gd" type="Script" id=2]
+[ext_resource path="res://Textures/Enemy/Flower Enemy/spritesheet (2).png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Enemies/Flower Enemy/FlowerEnemy.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 3.0
+height = 4.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10, 9.5 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 5.5, 5.5 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "Attack"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.19 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_enter_idle_state"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Die"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 5, 9, 13 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Hit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 6 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Move"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 7, 11, 15, 19 ]
+}
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 7.5, 7 )
+
+[node name="FlowerEnemy" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 4 )
+max_health = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -5 )
+shape = SubResource( 5 )
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2( 0, -9.5 )
+shape = SubResource( 6 )
+disabled = true
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( 0, -6 )
+shape = SubResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1, -16 )
+texture = ExtResource( 3 )
+hframes = 4
+vframes = 12
+frame = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Attack = SubResource( 1 )
+anims/Die = SubResource( 2 )
+anims/Hit = SubResource( 3 )
+anims/Move = SubResource( 4 )
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+position = Vector2( 0, -7 )
+shape = SubResource( 8 )
+
+[connection signal="body_entered" from="Vision" to="." method="_on_Vision_body_entered"]

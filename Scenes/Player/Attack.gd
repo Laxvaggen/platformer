@@ -16,7 +16,7 @@ func update(_delta: float) -> void:
 		_get_next_state()
 
 func physics_update(_delta: float) -> void:
-	pass
+	player.set_target_velocity(0, player.stats.ground_deceleration, player.stats.max_fall_speed, player.stats.gravity_acceleration)
 
 func _play_next_attack(stab:bool=false) -> void:
 	if stab:
@@ -78,6 +78,8 @@ func enter(_msg := {}) -> void:
 func exit() -> void:
 	attack_reset_timer.stop()
 	last_attack = 0
+	player.disable_collision($"../../HitBox")
+	
 
 
 func _on_AttackResetTimer_timeout() -> void:

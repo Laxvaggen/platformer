@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Textures/Player/spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player/PlayerStateMachine.gd" type="Script" id=2]
@@ -23,6 +23,8 @@
 [ext_resource path="res://Scenes/Player/Shield.gd" type="Script" id=21]
 [ext_resource path="res://Scenes/Player/BowSprite.gd" type="Script" id=22]
 [ext_resource path="res://Scenes/Player/BowPivot.gd" type="Script" id=23]
+[ext_resource path="res://Scenes/Player/ShieldSprite.gd" type="Script" id=24]
+[ext_resource path="res://Textures/Player/Platformer/shield/tSide SHield directional.png" type="Texture" id=25]
 
 [sub_resource type="CapsuleShape2D" id=25]
 radius = 4.0
@@ -77,6 +79,38 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=46]
+resource_name = "Shield Hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShieldSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8 ]
+}
+
+[sub_resource type="Animation" id=47]
+resource_name = "Shield Ready"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShieldSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
 }
 
 [sub_resource type="Animation" id=29]
@@ -273,7 +307,7 @@ tracks/0/keys = {
 "values": [ 40, 41, 42, 43 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -321,7 +355,7 @@ tracks/0/keys = {
 "values": [ 100, 101, 102, 103 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -368,7 +402,7 @@ tracks/0/keys = {
 "values": [ 140, 141, 142, 143, 144, 145 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -405,7 +439,7 @@ tracks/0/keys = {
 "values": [ 80, 81, 82, 83 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -435,7 +469,7 @@ tracks/0/keys = {
 "values": [ 90, 91, 92, 93 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -521,7 +555,7 @@ tracks/0/keys = {
 "values": [ 160, 161, 162, 163, 164, 165 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -560,7 +594,7 @@ tracks/0/keys = {
 "values": [ 170, 171, 172, 173 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -665,7 +699,7 @@ tracks/0/keys = {
 "values": [ 150, 151, 152, 153, 154, 155 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("BowPivot")
+tracks/1/path = NodePath("Pivot")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -736,24 +770,35 @@ hframes = 10
 vframes = 25
 frame = 220
 
-[node name="BowPivot" type="Position2D" parent="."]
+[node name="Pivot" type="Position2D" parent="."]
 position = Vector2( -2, 2 )
 script = ExtResource( 23 )
 
-[node name="BowSprite" type="Sprite" parent="BowPivot"]
+[node name="BowSprite" type="Sprite" parent="Pivot"]
 texture = ExtResource( 8 )
 hframes = 5
 vframes = 2
-frame = 9
+frame = 2
 script = ExtResource( 22 )
 no_flip = true
 
-[node name="ArrowSpawn" type="Position2D" parent="BowPivot"]
+[node name="ShieldSprite" type="Sprite" parent="Pivot"]
+texture = ExtResource( 25 )
+offset = Vector2( 0, -2 )
+hframes = 3
+vframes = 3
+frame = 8
+script = ExtResource( 24 )
+no_flip = true
+
+[node name="ArrowSpawn" type="Position2D" parent="Pivot"]
 position = Vector2( 6, 0 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BowPivot"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot"]
 "anims/Bow Fire" = SubResource( 26 )
 "anims/Bow Ready" = SubResource( 27 )
+"anims/Shield Hit" = SubResource( 46 )
+"anims/Shield Ready" = SubResource( 47 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/Attack 1" = SubResource( 29 )
@@ -823,7 +868,7 @@ script = ExtResource( 10 )
 script = ExtResource( 16 )
 
 [node name="WallJumpResetTimer" type="Timer" parent="PlayerStateMachine/Wallglide"]
-wait_time = 1.2
+wait_time = 0.8
 one_shot = true
 
 [node name="Attack" type="Node" parent="PlayerStateMachine"]
@@ -872,6 +917,11 @@ cast_to = Vector2( 10, 0 )
 cast_to = Vector2( 0, -10 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.25, 0.25 )
+smoothing_enabled = true
 
 [connection signal="timeout" from="PlayerStateMachine/Dash/DashTimer" to="PlayerStateMachine/Dash" method="_on_DashTimer_timeout"]
 [connection signal="timeout" from="PlayerStateMachine/Dash/DashCooldown" to="PlayerStateMachine/Dash" method="_on_DashCooldown_timeout"]

@@ -1,0 +1,460 @@
+[gd_scene load_steps=83 format=2]
+
+[ext_resource path="res://Scenes/Menus/LevelSelectMenu.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/LightningSprite.gd" type="Script" id=2]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/Large Lightning (64x48).png" type="Texture" id=3]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/2 -Background - Mountains (2).png" type="Texture" id=4]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/Distant Lightning (32x32).png" type="Texture" id=5]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/Small Lightning (32x32).png" type="Texture" id=6]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/1- Background - Sky (1).png" type="Texture" id=7]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/5- Fog (5).png" type="Texture" id=8]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/4- Ground (4).png" type="Texture" id=9]
+[ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/3 -Foreground - Mountains (3).png" type="Texture" id=10]
+[ext_resource path="res://Textures/Inventory/UI - Words/Words With BG/UI - Words8.png" type="Texture" id=11]
+[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons16.png" type="Texture" id=12]
+[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons17.png" type="Texture" id=13]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 128, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 160, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 192, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 224, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 256, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 288, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 320, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 352, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 384, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 416, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 448, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 480, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 512, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 544, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=57]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": false,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 48, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 96, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 144, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 192, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 240, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 288, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 336, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 384, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 432, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 480, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 528, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 576, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 624, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 672, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 720, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 768, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 816, 64, 48 )
+
+[sub_resource type="SpriteFrames" id=58]
+animations = [ {
+"frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ) ],
+"loop": false,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 128, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 160, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 192, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 224, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 256, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 288, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 320, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 352, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 384, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 416, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 448, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=54]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 480, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=55]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 512, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=56]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 544, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=59]
+animations = [ {
+"frames": [ SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ) ],
+"loop": false,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="StyleBoxTexture" id=64]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.980392, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=65]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.462745, 0.392157, 0.215686, 1 )
+
+[sub_resource type="StyleBoxTexture" id=66]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
+
+[sub_resource type="StyleBoxTexture" id=67]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 93, 33 )
+
+[sub_resource type="StyleBoxTexture" id=60]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.980392, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=61]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.462745, 0.392157, 0.215686, 1 )
+
+[sub_resource type="StyleBoxTexture" id=62]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
+
+[sub_resource type="StyleBoxTexture" id=63]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="StyleBoxTexture" id=68]
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.980392, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=69]
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.462745, 0.392157, 0.215686, 1 )
+
+[sub_resource type="StyleBoxTexture" id=70]
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
+
+[sub_resource type="StyleBoxTexture" id=71]
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[node name="LevelSelectMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -99
+offset = Vector2( 500, 500 )
+scale = Vector2( 3, 3 )
+transform = Transform2D( 3, 0, 0, 3, 500, 500 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+scale = Vector2( 4, 4 )
+motion_scale = Vector2( 0, 0 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 7 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.2, 0.2 )
+
+[node name="LightningSprite" type="AnimatedSprite" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2( -30, -11 )
+frames = SubResource( 57 )
+script = ExtResource( 2 )
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="ParallaxBackground/ParallaxLayer2/LightningSprite"]
+one_shot = true
+autostart = true
+
+[node name="LightningSprite2" type="AnimatedSprite" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2( -160, -12 )
+frames = SubResource( 57 )
+flip_h = true
+script = ExtResource( 2 )
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="ParallaxBackground/ParallaxLayer2/LightningSprite2"]
+one_shot = true
+autostart = true
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource( 4 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.4, 0.4 )
+
+[node name="LightningSprite3" type="AnimatedSprite" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2( -64, 11 )
+frames = SubResource( 58 )
+script = ExtResource( 2 )
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="ParallaxBackground/ParallaxLayer3/LightningSprite3"]
+one_shot = true
+autostart = true
+
+[node name="LightningSprite4" type="AnimatedSprite" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2( 16, 4 )
+frames = SubResource( 59 )
+script = ExtResource( 2 )
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="ParallaxBackground/ParallaxLayer3/LightningSprite4"]
+one_shot = true
+autostart = true
+
+[node name="Sprite3" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource( 10 )
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.6, 0.6 )
+
+[node name="Sprite4" type="Sprite" parent="ParallaxBackground/ParallaxLayer4"]
+texture = ExtResource( 9 )
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.6, 0.6 )
+
+[node name="Sprite5" type="Sprite" parent="ParallaxBackground/ParallaxLayer5"]
+texture = ExtResource( 8 )
+
+[node name="Back" type="Button" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -68.0
+margin_right = 140.0
+margin_bottom = -28.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 64 )
+custom_styles/pressed = SubResource( 65 )
+custom_styles/disabled = SubResource( 66 )
+custom_styles/normal = SubResource( 67 )
+enabled_focus_mode = 0
+keep_pressed_outside = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -70.0
+margin_top = -20.0
+margin_right = 70.0
+margin_bottom = 20.0
+
+[node name="LevelPrevious" type="Button" parent="HBoxContainer"]
+margin_right = 66.0
+margin_bottom = 40.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 60 )
+custom_styles/pressed = SubResource( 61 )
+custom_styles/disabled = SubResource( 62 )
+custom_styles/normal = SubResource( 63 )
+enabled_focus_mode = 0
+keep_pressed_outside = true
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+margin_left = 70.0
+margin_right = 70.0
+margin_bottom = 40.0
+
+[node name="LevelNext" type="Button" parent="HBoxContainer"]
+margin_left = 74.0
+margin_right = 140.0
+margin_bottom = 40.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 68 )
+custom_styles/pressed = SubResource( 69 )
+custom_styles/disabled = SubResource( 70 )
+custom_styles/normal = SubResource( 71 )
+enabled_focus_mode = 0
+keep_pressed_outside = true
+
+[connection signal="timeout" from="ParallaxBackground/ParallaxLayer2/LightningSprite/Timer" to="ParallaxBackground/ParallaxLayer2/LightningSprite" method="_on_Timer_timeout"]
+[connection signal="timeout" from="ParallaxBackground/ParallaxLayer2/LightningSprite2/Timer" to="ParallaxBackground/ParallaxLayer2/LightningSprite2" method="_on_Timer_timeout"]
+[connection signal="timeout" from="ParallaxBackground/ParallaxLayer3/LightningSprite3/Timer" to="ParallaxBackground/ParallaxLayer3/LightningSprite3" method="_on_Timer_timeout"]
+[connection signal="timeout" from="ParallaxBackground/ParallaxLayer3/LightningSprite4/Timer" to="ParallaxBackground/ParallaxLayer3/LightningSprite4" method="_on_Timer_timeout"]
+[connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

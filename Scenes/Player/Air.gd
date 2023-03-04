@@ -38,6 +38,9 @@ func _get_next_state() -> void:
 	if player.is_on_wall() and player.velocity.y >= 0:
 		state_machine.transition_to("Wallglide")
 		return
+	if Input.is_action_pressed("ranged attack"):
+		state_machine.transition_to("RangedAttack")
+		return
 
 func enter(_msg := {}) -> void:
 	if _msg.has("do_jump"):

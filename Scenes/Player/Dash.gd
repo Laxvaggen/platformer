@@ -36,9 +36,11 @@ func enter(_msg := {}) -> void:
 	dash_cooldown.start()
 	dash_timer.start()
 	dash_on_cooldown = true
+	$"../../HurtBox".monitoring = false
 
 func exit() -> void:
 	dash_timer.stop()
+	$"../../HurtBox".monitoring = true
 
 
 func _on_DashTimer_timeout() -> void:

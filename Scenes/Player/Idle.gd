@@ -43,6 +43,7 @@ func _get_next_state() -> void:
 	
 	if Input.is_action_pressed("ranged attack"):
 		state_machine.transition_to("RangedAttack")
+		return
 	
 	if !player.is_on_floor():
 		state_machine.transition_to("Air")

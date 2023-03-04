@@ -28,6 +28,12 @@ func _get_next_state() -> void:
 	if Input.is_action_pressed("attack"):
 		state_machine.transition_to("Attack", {stab=true})
 		return
+	if Input.is_action_pressed("ranged attack"):
+		state_machine.transition_to("RangedAttack")
+		return
+	if Input.is_action_pressed("shield"):
+		state_machine.transition_to("Shield")
+		return
 	
 	if !player.is_on_ground():
 		state_machine.transition_to("Air")

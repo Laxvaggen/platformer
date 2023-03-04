@@ -22,6 +22,14 @@ func _get_next_state() -> void:
 		state_machine.transition_to("Idle", {unforce_animation=true})
 		player.lock_state_switching(0.5)
 		return
+	if Input.is_action_pressed("evade"):
+		animation_player.play("Climb from Ledge")
+		player.lock_state_switching(0.12)
+		$"../../HurtBox".monitoring = false
+		yield(get_tree().create_timer(0.14), "timeout")
+		state_machine.transition_to("Roll")
+		
+
 	if Input.is_action_pressed("crouch"):
 		player.global_position.y += 2
 		state_machine.transition_to("Wallglide")

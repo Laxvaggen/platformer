@@ -3,7 +3,8 @@ extends KinematicBody2D
 
 export (Resource) var stats
 
-signal hit
+signal damage_taken(amount)
+signal died
 
 var velocity := Vector2.ZERO
 var target_velocity := Vector2.ZERO
@@ -13,14 +14,14 @@ var facing_x := 1
 var direction_x := facing_x
 
 
-
 onready var health: int = stats.max_hp
 
 onready var state_locked_timer = $StateLockedTimer
 onready var state_machine  = $PlayerStateMachine
 
 func _ready():
-	$BowPivot.visible = false
+	$Pivot/BowSprite.visible = false
+	$Pivot/ShieldSprite.visible = false
 	$PlayerStateMachine/Attack/AttackResetTimer.wait_time = 0.2/stats.atk_speed
 	$AnimationPlayer.animation_set_next("Jump to Fall Transition", "Fall")
 
@@ -33,13 +34,23 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func take_damage(damage:int, knockback:Vector2, _source) -> void:
-	if state_machine.state == state_machine.get_node("Shield"):
-		state_machine.get_node("Shield").receive_hit()
-		#stun source
+	if state_machine.state == state_machine.get_node("Shield") and Vector2(facing_x, 0).normalized() == Vector2(_source.global_position.x - global_position.x, 0).normalized():
+			state_machine.get_node("Shield").receive_hit()
+			if _source.has_method("_enter_stun_state"):
+				_source._enter_stun_state()
 	else:
 		state_machine.transition_to("Hit")
 		health -= damage
 		velocity = knockback
+		emit_signal("damage_taken", damage)
+		if health <= 0:
+			emit_signal("died")
+
+func disable_collision(target) -> void:
+	for child in target.get_children():
+		if child is CollisionShape2D:
+			child.set_deferred("disabled", true)
+		disable_collision(child)
 
 func reposition(x_offset:int=0, y_offset:int=0) -> void:
 	global_position.x += x_offset * facing_x
@@ -210,11 +221,11 @@ func low_ceiling() -> bool:
 func set_collision_shape(height: String) -> void:
 	assert(height == "low" or height == "high")
 	if height == "low":
-		$CollisionShapeCrouching.disabled = false
-		$CollisionShapeStanding.disabled = true
+		$CollisionShapeCrouching.set_deferred("disabled", false)
+		$CollisionShapeStanding.set_deferred("disabled", true)
 	else:
-		$CollisionShapeCrouching.disabled = true
-		$CollisionShapeStanding.disabled = false
+		$CollisionShapeCrouching.set_deferred("disabled", true)
+		$CollisionShapeStanding.set_deferred("disabled", false)
 
 func _on_StateLockedTimer_timeout() -> void:
 	state_machine.state_locked = false

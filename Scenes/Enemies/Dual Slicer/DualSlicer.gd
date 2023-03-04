@@ -4,7 +4,7 @@ extends KinematicBody2D
 #enter attack from pursue if in range to hit player (with animation first playing a "!" warning)
 #roam is walk back and forth, turning around at some range or when hitting edge or wall
 
-enum {ROAM, PURSUE, ATTACK, TAKE_HIT, DIE}
+enum {ROAM, PURSUE, ATTACK, TAKE_HIT, DIE, DODGE, STUN}
 
 var state: int = ROAM
 
@@ -17,20 +17,22 @@ export (int) var max_fall_speed
 var velocity := Vector2.ZERO
 var direction_x := 1
 
+var dodge_range := 15
+
 var pursue_target: KinematicBody2D
 var last_attack := 0
 var state_locked := false
-var queue_die := false
 
 
 onready var animation_player = $AnimationPlayer
 onready var health: int = max_health
+onready var attack_range = $AttackRange
 
 
 func _ready() -> void:
 	_enter_roam_state()
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	pass
 
 func _physics_process(delta) -> void:
@@ -42,9 +44,13 @@ func _physics_process(delta) -> void:
 		ATTACK:
 			_attack_state(delta)
 		TAKE_HIT:
-			_damaged_state(delta)
+			_take_hit_state(delta)
 		DIE:
 			_die_state(delta)
+		DODGE:
+			_dodge_state(delta)
+		STUN:
+			_stun_state(delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func apply_gravity(delta) -> void:
@@ -60,96 +66,61 @@ func is_on_ground() -> bool:
 	ground_finder.enabled = false
 	return val
 
-func start_attack() -> void:
-	animation_player.play("Attack")
+func lock_state_switching(time:float) -> void:
+	assert(time>0)
+	state_locked = true
+	yield(get_tree().create_timer(time), "timeout")
+	state_locked = false
 
-func pause_attacks() -> void:
-	assert(animation_player.current_animation == "Attack")
+func pause_attacks(time:float=0.3) -> void:
+	if state == STUN:
+		animation_player.play("Idle")
+		$VFXSprite.visible = false
+		return
 	animation_player.stop(false)
-	$AttackCooldown.start()
+	if !attack_range.get_overlapping_bodies().has(pursue_target):
+		_enter_pursue_state()
+		$VFXSprite.visible = false
+		disable_collision($HitBox)
+	yield(get_tree().create_timer(time), "timeout")
+	animation_player.play()
 
-func take_damage(damage: int, knockback: Vector2, source) -> void:
+func take_damage(damage: int, knockback: Vector2, _source) -> void:
 	health -= damage
-	if state == ATTACK:
-		_exit_attack_state()
-	pursue_target = source
-	_enter_damaged_state(knockback)
-
-func _roam_state(_delta) -> void:
-	apply_gravity(_delta)
-
-func _pursue_state(_delta) -> void:
-	if not pursue_target is KinematicBody2D:
-		_enter_roam_state()
-		return
-	if !is_on_ground() or is_on_wall():
-		_enter_roam_state()
-		velocity = Vector2.ZERO
-		return
-	if global_position.x - pursue_target.global_position.x < 0:
-		set_facing_x(1)
-	else:
-		set_facing_x(-1)
-	velocity.x = move_speed * direction_x
-
-
-func _attack_state(_delta) -> void:
-	pass
-
-func _damaged_state(_delta) -> void:
-	apply_gravity(_delta)
-	yield(animation_player, "animation_finished")
-	_enter_pursue_state()
-
-func _die_state(_delta) -> void:
-	apply_gravity(_delta)
-	if is_on_ground():
-		velocity.x = 0
-
-func _enter_roam_state() -> void:
-	if state_locked:
-		return
-	animation_player.play("Idle")
-	state = ROAM
-
-func _enter_pursue_state() -> void:
-	if state_locked:
-		return
-	animation_player.play("Walk")
-	state = PURSUE
-
-func _enter_attack_state() -> void:
-	if state_locked:
-		return
-	start_attack()
-	state = ATTACK
-
-func _enter_damaged_state(knockback) -> void:
-	if state_locked:
-		return
-	animation_player.play("Hit")
-	velocity = knockback
+	$VFXSprite.visible = false
 	if health <= 0:
 		_enter_die_state()
-		return
-	state = TAKE_HIT
+	else:
+		_enter_take_hit_state()
+		velocity = knockback
 
-func _exit_attack_state() -> void:
-	for child in $HitBox.get_children():
-		if child is CollisionShape2D:
-			child.set_deferred("disabled", true)
-	$VFXSprite.visible = false
+func can_see_target(target:KinematicBody2D) -> bool:
+	var raycast = $Targeter
+	if target == null:
+		return false
+	raycast.cast_to = target.position-position
+	if raycast.get_collider() == null:
+		return false
+	if raycast.get_collider().is_in_group("Player"):
+		return true
+	else:
+		return false
 
-func _enter_die_state() -> void:
-	animation_player.queue("Die")
-	for child in get_children():
-		if child is Area2D:
-			child.set_deferred("monitorable", false)
-			child.set_deferred("monitoring", false)
-	state_locked = true
-	state = DIE
+func _apply_gravity(delta) -> void:
+	velocity.y = move_toward(velocity.y, max_fall_speed, gravity_acceleration*delta)
 
-func set_facing_x(direction, force_look_forward=true) -> void:
+func get_distance_to_target(target:KinematicBody2D) -> float:
+	var raycast = $Targeter
+	raycast.cast_to = target.position-position
+	raycast.force_raycast_update()
+	if raycast.get_collider() == null or target == null:
+		return -1.0
+	if !raycast.get_collider().is_in_group("Player"):
+		return -1.0
+	var vector = raycast.get_collision_point() - global_position
+	return vector.length()
+
+func set_facing_x(direction:int) -> void:
 	if !abs(direction) == 1:
 		return
 	if direction == direction_x:
@@ -173,28 +144,118 @@ func flip_children(direction, target) -> void:
 			child.cast_to.x *= -1
 		flip_children(direction, child)
 
+func disable_collision(target) -> void:
+	for child in target.get_children():
+		if child is CollisionShape2D:
+			child.set_deferred("disabled", true)
+		disable_collision(child)
 
-func _on_AttackCooldown_timeout() -> void:
-	if state != ATTACK:
-		_enter_pursue_state()
-		return
-	else:
-		animation_player.play()
-
-func _on_Vision_body_entered(body: Node) -> void:
-	if state_locked:
-		return
-	if body.is_in_group("Player") and state != ATTACK:
-		pursue_target = body
+func _roam_state(delta) -> void:
+	_apply_gravity(delta)
+	if can_see_target(pursue_target):
 		_enter_pursue_state()
 
-func _on_AttackRange_body_entered(body: Node) -> void:
-	if !body.is_in_group("Player") or state == ATTACK:
+func _pursue_state(delta) -> void:
+	_apply_gravity(delta)
+	if pursue_target == null:
+		_enter_roam_state()
 		return
+	var distance_to_target = get_distance_to_target(pursue_target)
 	if global_position.x - pursue_target.global_position.x < 0:
 		set_facing_x(1)
 	else:
 		set_facing_x(-1)
-	_enter_attack_state()
+	if distance_to_target < 0:
+		pass
+	elif distance_to_target < dodge_range and is_on_ground():
+		_enter_dodge_state()
+	elif !attack_range.get_overlapping_bodies().has(pursue_target):
+		velocity.x = move_speed * direction_x
+	else:
+		_enter_attack_state()
+		return
+
+
+func _attack_state(delta) -> void:
+	_apply_gravity(delta)
+
+func _take_hit_state(delta) -> void:
+	_apply_gravity(delta)
+	#velocity.x move toward zero
+	#wait for animation player, then return to attack state
+	pass
+	#play when hit, must override other states. Careful when cancelling animation player animations
+
+func _die_state(_delta) -> void:
+	pass
+	#disable hurtbox & shape, play die animation, queue free
+
+func _dodge_state(delta) -> void:
+	_apply_gravity(delta)
+	if !state_locked:
+		_enter_pursue_state()
+
+func _stun_state(delta) -> void:
+	_apply_gravity(delta)
+	if !state_locked:
+		$StunFXSprite.visible = false
+		_enter_pursue_state()
+
+
+func _enter_roam_state() -> void:
+	animation_player.play("Idle")
 	velocity = Vector2.ZERO
-	return
+	state = ROAM
+
+func _enter_pursue_state() -> void:
+	animation_player.play("Walk")
+	state = PURSUE
+
+func _enter_attack_state() -> void:
+	if $AttackCooldown.time_left > 0:
+		return
+	animation_player.play("Attack")
+	$AttackCooldown.start()
+	velocity = Vector2.ZERO
+	state = ATTACK
+
+func _enter_take_hit_state() -> void:
+	animation_player.play("Hit")
+	state = TAKE_HIT
+	yield($AnimationPlayer, "animation_finished")
+	for body in $Vision.get_overlapping_bodies():
+		if body.is_in_group("Player"):
+			_enter_pursue_state()
+			return
+	_enter_roam_state()
+
+func _enter_die_state() -> void:
+	velocity = Vector2.ZERO
+	animation_player.play("Hit")
+	animation_player.queue("Die")
+	disable_collision(self)
+	state = DIE
+
+func _enter_dodge_state() -> void:
+	velocity.x = -move_speed * 2.5 * direction_x
+	velocity.y = -50
+	animation_player.play("Hit")
+	animation_player.queue("Walk")
+	lock_state_switching(0.3)
+	state = DODGE
+
+func _enter_stun_state() -> void:
+	state = STUN
+	$StunFXSprite.visible = true
+	lock_state_switching(1)
+
+func _on_Vision_body_entered(body: Node) -> void:
+	if body.is_in_group("Player"):
+		pursue_target = body
+		$Targeter.enabled = true
+
+
+func _on_Vision_body_exited(body: Node) -> void:
+	if body.is_in_group("Player"):
+		pursue_target = null
+		$Targeter.enabled = false

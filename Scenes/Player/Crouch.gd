@@ -17,6 +17,9 @@ func _get_next_state() -> void:
 	if !Input.is_action_pressed("crouch") and !player.low_ceiling():
 			state_machine.transition_to("Idle")
 			return
+	if Input.is_action_pressed("ranged attack"):
+		state_machine.transition_to("RangedAttack")
+		return
 
 func enter(_msg := {}) -> void:
 	animation_player.play("Crouch")

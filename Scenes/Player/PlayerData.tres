@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 max_hp = 100
-atk_speed = 1.5
+atk_speed = 3.0
 walk_speed = 50
 run_speed = 100
 air_speed = 75
