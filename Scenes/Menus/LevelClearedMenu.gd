@@ -1,25 +1,16 @@
 extends Control
 
-var died := false
-var kills: int
-var damage_taken: int
-var time: float
 
 func _ready() -> void:
-	if died:
-		$VBoxContainer/Continue.disabled = true
+	var level = SceneManager.levels[SceneManager.current_level_index]
+	var stats = {"kills":level["kills"], 
+					"damage taken": level["damage taken"],
+					"time": level["time"]
+					}
 	var label_container = $ColorRect/MarginContainer/VBoxContainer2/
-	label_container.get_node("KillsLabel").text = "Kills------------------" + str(kills)
-	label_container.get_node("DamageTakenLabel").text = "Damage Taken-" + str(damage_taken)
-	label_container.get_node("TimeLabel").text = "Time-------------------" + str(round(time*10)/10)
-
-func update_scene() -> void: 
-	if died:
-		$VBoxContainer/Continue.disabled = true
-	var label_container = $ColorRect/MarginContainer/VBoxContainer2/
-	label_container.get_node("KillsLabel").text = "Kills------------------" + str(kills)
-	label_container.get_node("DamageTakenLabel").text = "Damage Taken-" + str(damage_taken)
-	label_container.get_node("TimeLabel").text = "Time-------------------" + str(round(time*10)/10)
+	label_container.get_node("KillsLabel").text = "Kills------------------" + str(stats["kills"])
+	label_container.get_node("DamageTakenLabel").text = "Damage Taken-" + str(stats["damage taken"])
+	label_container.get_node("TimeLabel").text = "Time-------------------" + str(round(stats["time"]*10)/10)
 
 func _on_Continue_pressed() -> void:
 	SceneManager._start_next_level()

@@ -21,5 +21,5 @@ position = Vector2( 338, -1 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 
-[node name="HeavySlicer" parent="." instance=ExtResource( 5 )]
+[node name="HeavySlicer" parent="." groups=["Enemy"] instance=ExtResource( 5 )]
 position = Vector2( 171, 30 )

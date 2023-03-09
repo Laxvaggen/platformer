@@ -1,22 +1,25 @@
 extends Node2D
 
-var time := 0
-var damage_taken := 0
-var kills := 0
+var time: float = 0
+var damage_taken: int = 0
+var kills: int= 0
 
 func _ready() -> void:
 	$LevelExit.connect("level_cleared", self, "level_cleared")
 	$Player.connect("damage_taken", self, "set_damage_taken")
 	$Player.connect("died", self, "level_failed")
 	for enemy in _get_enemies():
-		enemy.connect("died", self, enemy_died())
+		enemy.connect("died", self, "enemy_died")
 
 
 func _process(delta: float) -> void:
 	time += delta
 
 func level_cleared() -> void:
-	var stats = [kills, damage_taken, time]
+	var stats = {"kills":kills, 
+					"damage taken": damage_taken,
+					"time": time
+					}
 	
 	var perfect_stats: Array
 	if _get_enemies().size() == 0:
@@ -25,7 +28,6 @@ func level_cleared() -> void:
 		perfect_stats.append("damage_taken")
 	if time <= 180:
 		perfect_stats.append("time")
-	
 	SceneManager._level_cleared(stats, perfect_stats)
 
 func level_failed() -> void:

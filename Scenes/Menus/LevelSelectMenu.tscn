@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://Scenes/Menus/LevelSelectMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/LightningSprite.gd" type="Script" id=2]
@@ -13,6 +13,9 @@
 [ext_resource path="res://Textures/Inventory/UI - Words/Words With BG/UI - Words8.png" type="Texture" id=11]
 [ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons16.png" type="Texture" id=12]
 [ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons17.png" type="Texture" id=13]
+[ext_resource path="res://Textures/Inventory/UI - Words/Words With BG/UI - Words5.png" type="Texture" id=14]
+[ext_resource path="res://Textures/Font/DungeonFont.ttf" type="DynamicFontData" id=15]
+[ext_resource path="res://Textures/Inventory/UI - Borders and HP/UI - 16x16 UI Tileset with glow.png" type="Texture" id=16]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 5 )
@@ -273,6 +276,10 @@ modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
 texture = ExtResource( 11 )
 region_rect = Rect2( 0, 0, 93, 33 )
 
+[sub_resource type="DynamicFont" id=76]
+size = 48
+font_data = ExtResource( 15 )
+
 [sub_resource type="StyleBoxTexture" id=60]
 texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 32, 32 )
@@ -292,6 +299,25 @@ modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
 texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 32, 32 )
 
+[sub_resource type="StyleBoxTexture" id=72]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.980392, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=73]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.462745, 0.392157, 0.215686, 1 )
+
+[sub_resource type="StyleBoxTexture" id=74]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
+
+[sub_resource type="StyleBoxTexture" id=75]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 93, 33 )
+
 [sub_resource type="StyleBoxTexture" id=68]
 texture = ExtResource( 13 )
 region_rect = Rect2( 0, 0, 32, 32 )
@@ -310,6 +336,162 @@ modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
 [sub_resource type="StyleBoxTexture" id=71]
 texture = ExtResource( 13 )
 region_rect = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="TileSet" id=77]
+0/name = "UI - 16x16 UI Tileset with glow.png 0"
+0/texture = ExtResource( 16 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 16, 64, 16, 16 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "UI - 16x16 UI Tileset with glow.png 1"
+1/texture = ExtResource( 16 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 32, 64, 16, 16 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "UI - 16x16 UI Tileset with glow.png 2"
+2/texture = ExtResource( 16 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 48, 64, 16, 16 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "UI - 16x16 UI Tileset with glow.png 3"
+3/texture = ExtResource( 16 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 16, 80, 16, 16 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+4/name = "UI - 16x16 UI Tileset with glow.png 4"
+4/texture = ExtResource( 16 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 32, 80, 16, 16 )
+4/tile_mode = 0
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
+5/name = "UI - 16x16 UI Tileset with glow.png 5"
+5/texture = ExtResource( 16 )
+5/tex_offset = Vector2( 0, 0 )
+5/modulate = Color( 1, 1, 1, 1 )
+5/region = Rect2( 48, 80, 16, 16 )
+5/tile_mode = 0
+5/occluder_offset = Vector2( 0, 0 )
+5/navigation_offset = Vector2( 0, 0 )
+5/shape_offset = Vector2( 0, 0 )
+5/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+5/shape_one_way = false
+5/shape_one_way_margin = 0.0
+5/shapes = [  ]
+5/z_index = 0
+6/name = "UI - 16x16 UI Tileset with glow.png 6"
+6/texture = ExtResource( 16 )
+6/tex_offset = Vector2( 0, 0 )
+6/modulate = Color( 1, 1, 1, 1 )
+6/region = Rect2( 16, 96, 16, 16 )
+6/tile_mode = 0
+6/occluder_offset = Vector2( 0, 0 )
+6/navigation_offset = Vector2( 0, 0 )
+6/shape_offset = Vector2( 0, 0 )
+6/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+6/shape_one_way = false
+6/shape_one_way_margin = 0.0
+6/shapes = [  ]
+6/z_index = 0
+7/name = "UI - 16x16 UI Tileset with glow.png 7"
+7/texture = ExtResource( 16 )
+7/tex_offset = Vector2( 0, 0 )
+7/modulate = Color( 1, 1, 1, 1 )
+7/region = Rect2( 32, 96, 16, 16 )
+7/tile_mode = 0
+7/occluder_offset = Vector2( 0, 0 )
+7/navigation_offset = Vector2( 0, 0 )
+7/shape_offset = Vector2( 0, 0 )
+7/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+7/shape_one_way = false
+7/shape_one_way_margin = 0.0
+7/shapes = [  ]
+7/z_index = 0
+8/name = "UI - 16x16 UI Tileset with glow.png 8"
+8/texture = ExtResource( 16 )
+8/tex_offset = Vector2( 0, 0 )
+8/modulate = Color( 1, 1, 1, 1 )
+8/region = Rect2( 48, 96, 16, 16 )
+8/tile_mode = 0
+8/occluder_offset = Vector2( 0, 0 )
+8/navigation_offset = Vector2( 0, 0 )
+8/shape_offset = Vector2( 0, 0 )
+8/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+8/shape_one_way = false
+8/shape_one_way_margin = 0.0
+8/shapes = [  ]
+8/z_index = 0
+9/name = "UI - 16x16 UI Tileset with glow.png 9"
+9/texture = ExtResource( 16 )
+9/tex_offset = Vector2( 0, 0 )
+9/modulate = Color( 1, 1, 1, 1 )
+9/region = Rect2( 0, 32, 96, 32 )
+9/tile_mode = 0
+9/occluder_offset = Vector2( 0, 0 )
+9/navigation_offset = Vector2( 0, 0 )
+9/shape_offset = Vector2( 0, 0 )
+9/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+9/shape_one_way = false
+9/shape_one_way_margin = 0.0
+9/shapes = [  ]
+9/z_index = 0
+10/name = "UI - 16x16 UI Tileset with glow.png 10"
+10/texture = ExtResource( 16 )
+10/tex_offset = Vector2( 8, 0 )
+10/modulate = Color( 1, 1, 1, 1 )
+10/region = Rect2( 16, 0, 64, 32 )
+10/tile_mode = 0
+10/occluder_offset = Vector2( 0, 0 )
+10/navigation_offset = Vector2( 0, 0 )
+10/shape_offset = Vector2( 0, 0 )
+10/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+10/shape_one_way = false
+10/shape_one_way_margin = 0.0
+10/shapes = [  ]
+10/z_index = 1
 
 [node name="LevelSelectMenu" type="Control"]
 anchor_right = 1.0
@@ -411,18 +593,26 @@ custom_styles/normal = SubResource( 67 )
 enabled_focus_mode = 0
 keep_pressed_outside = true
 
+[node name="LevelName" type="Label" parent="."]
+margin_left = 433.0
+margin_top = 227.0
+margin_right = 537.0
+margin_bottom = 276.0
+custom_fonts/font = SubResource( 76 )
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -70.0
-margin_top = -20.0
-margin_right = 70.0
-margin_bottom = 20.0
+margin_left = -181.0
+margin_top = -21.0
+margin_right = 129.0
+margin_bottom = 19.0
+rect_rotation = -0.221005
 
 [node name="LevelPrevious" type="Button" parent="HBoxContainer"]
-margin_right = 66.0
+margin_right = 100.0
 margin_bottom = 40.0
 focus_mode = 0
 size_flags_horizontal = 3
@@ -434,14 +624,23 @@ custom_styles/normal = SubResource( 63 )
 enabled_focus_mode = 0
 keep_pressed_outside = true
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
-margin_left = 70.0
-margin_right = 70.0
+[node name="EnterLevel" type="Button" parent="HBoxContainer"]
+margin_left = 104.0
+margin_right = 205.0
 margin_bottom = 40.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 72 )
+custom_styles/pressed = SubResource( 73 )
+custom_styles/disabled = SubResource( 74 )
+custom_styles/normal = SubResource( 75 )
+enabled_focus_mode = 0
+keep_pressed_outside = true
 
 [node name="LevelNext" type="Button" parent="HBoxContainer"]
-margin_left = 74.0
-margin_right = 140.0
+margin_left = 209.0
+margin_right = 310.0
 margin_bottom = 40.0
 focus_mode = 0
 size_flags_horizontal = 3
@@ -453,8 +652,58 @@ custom_styles/normal = SubResource( 71 )
 enabled_focus_mode = 0
 keep_pressed_outside = true
 
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 297.0
+margin_top = 324.0
+margin_right = 704.0
+margin_bottom = 494.0
+color = Color( 0.137255, 0.137255, 0.137255, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+margin_right = 387.0
+margin_bottom = 155.0
+
+[node name="KillsLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer2"]
+margin_right = 387.0
+margin_bottom = 49.0
+custom_fonts/font = SubResource( 76 )
+text = "Kills--------------------"
+
+[node name="DamageTakenLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer2"]
+margin_top = 53.0
+margin_right = 387.0
+margin_bottom = 102.0
+custom_fonts/font = SubResource( 76 )
+text = "Damage Taken---"
+
+[node name="TimeLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer2"]
+margin_top = 106.0
+margin_right = 387.0
+margin_bottom = 155.0
+custom_fonts/font = SubResource( 76 )
+text = "Time---------------------"
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 15, 57 )
+scale = Vector2( 4, 4 )
+tile_set = SubResource( 77 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 262148, 0, 0, 262149, 1, 0, 262150, 1, 0, 262151, 1, 0, 262152, 1, 0, 262153, 1, 0, 262154, 2, 0, 327684, 3, 0, 327690, 5, 0, 393220, 6, 0, 393221, 7, 0, 393222, 7, 0, 393223, 7, 0, 393224, 7, 0, 393225, 7, 0, 393226, 8, 0 )
+
 [connection signal="timeout" from="ParallaxBackground/ParallaxLayer2/LightningSprite/Timer" to="ParallaxBackground/ParallaxLayer2/LightningSprite" method="_on_Timer_timeout"]
 [connection signal="timeout" from="ParallaxBackground/ParallaxLayer2/LightningSprite2/Timer" to="ParallaxBackground/ParallaxLayer2/LightningSprite2" method="_on_Timer_timeout"]
 [connection signal="timeout" from="ParallaxBackground/ParallaxLayer3/LightningSprite3/Timer" to="ParallaxBackground/ParallaxLayer3/LightningSprite3" method="_on_Timer_timeout"]
 [connection signal="timeout" from="ParallaxBackground/ParallaxLayer3/LightningSprite4/Timer" to="ParallaxBackground/ParallaxLayer3/LightningSprite4" method="_on_Timer_timeout"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="HBoxContainer/LevelPrevious" to="." method="_on_LevelPrevious_pressed"]
+[connection signal="pressed" from="HBoxContainer/EnterLevel" to="." method="_on_EnterLevel_pressed"]
+[connection signal="pressed" from="HBoxContainer/LevelNext" to="." method="_on_LevelNext_pressed"]

@@ -4,8 +4,12 @@ signal continuegame
 signal newgame
 
 func _ready() -> void:
-	if SceneManager.levels_cleared.size() <= 0:
-		$VBoxContainer/Continue.disabled = true
+	$VBoxContainer/Continue.disabled = true
+	$VBoxContainer/LevelSelect.disabled = true
+	for level in SceneManager.levels:
+		if level["completed"] == true:
+			$VBoxContainer/Continue.disabled = false
+			$VBoxContainer/LevelSelect.disabled = false
 
 func _physics_process(delta: float) -> void:
 	var mouse_pos = (get_global_mouse_position() - get_viewport().size/2)/(get_viewport().size/2)

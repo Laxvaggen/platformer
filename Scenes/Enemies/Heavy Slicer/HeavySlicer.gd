@@ -30,6 +30,7 @@ onready var animation_player = $AnimationPlayer
 onready var health: int = max_health
 onready var attack_range = $AttackRange
 
+signal died
 
 func _ready() -> void:
 	_enter_roam_state()
@@ -249,6 +250,7 @@ func _enter_die_state() -> void:
 	animation_player.play("Hit")
 	animation_player.queue("Die")
 	disable_collision(self)
+	emit_signal("died")
 	state = DIE
 
 func _enter_dodge_state() -> void:
