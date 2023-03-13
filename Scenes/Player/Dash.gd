@@ -29,6 +29,7 @@ func enter(_msg := {}) -> void:
 	if dash_on_cooldown:
 		state_machine.transition_to("Air")
 		return
+	player.gain_ap(-3)
 	animation_player.play("Dash")
 	player.set_velocity(player.stats.dash_strength*player.facing_x)
 	player.set_target_velocity(0, player.stats.air_acceleration, player.stats.max_fall_speed, player.stats.gravity_acceleration*0.75)

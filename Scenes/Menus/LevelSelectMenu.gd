@@ -7,7 +7,7 @@ var max_index: int
 
 func _ready() -> void:
 	for level in SceneManager.levels:
-		if level["completed"]:
+		if SceneManager.completed_levels_data.has(level["name"]):
 			selectable_levels.append(level)
 	max_index = selectable_levels.size() - 1
 	_load_level_data()
@@ -18,15 +18,11 @@ func _physics_process(delta: float) -> void:
 
 func _load_level_data() -> void:
 	var level = selectable_levels[level_index]
-	var stats = {"kills":level["kills"], 
-					"damage taken": level["damage taken"],
-					"time": level["time"],
-					"name": level["name"]
-					}
+	var stats = SceneManager.completed_levels_data[level["name"]]
 	var label_container = $ColorRect/MarginContainer/VBoxContainer2/
 	label_container.get_node("KillsLabel").text = "Kills------------------" + str(stats["kills"])
 	label_container.get_node("DamageTakenLabel").text = "Damage Taken-" + str(stats["damage taken"])
-	label_container.get_node("TimeLabel").text = "Time-------------------" + str(round(stats["time"]*10)/10)
+	label_container.get_node("TimeLabel").text = "Time-------------------" + str(stats["time"])
 	$LevelName.text = level["name"]
 
 func _on_Back_pressed() -> void:

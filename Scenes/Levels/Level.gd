@@ -11,24 +11,15 @@ func _ready() -> void:
 	for enemy in _get_enemies():
 		enemy.connect("died", self, "enemy_died")
 
-
 func _process(delta: float) -> void:
 	time += delta
 
 func level_cleared() -> void:
 	var stats = {"kills":kills, 
 					"damage taken": damage_taken,
-					"time": time
+					"time": round(time*10)/10
 					}
-	
-	var perfect_stats: Array
-	if _get_enemies().size() == 0:
-		perfect_stats.append("kills")
-	if damage_taken == 0:
-		perfect_stats.append("damage_taken")
-	if time <= 180:
-		perfect_stats.append("time")
-	SceneManager._level_cleared(stats, perfect_stats)
+	SceneManager._level_cleared(stats)
 
 func level_failed() -> void:
 	var stats = [kills, damage_taken, time]

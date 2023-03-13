@@ -4,7 +4,7 @@ extends Area2D
 var invincibility = false
 
 func _init() -> void:
-	collision_layer = 0
+	collision_layer = 3
 	collision_mask = 2
 
 

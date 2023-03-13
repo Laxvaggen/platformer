@@ -7,11 +7,11 @@ var state := IDLE
 onready var coyote_timer = $"../../CoyoteTimer"
 var coyote := false
 
-
 onready var pivot = $"../../Pivot"
 
 
 func update(_delta: float) -> void:
+	player.gain_ap(-2*_delta)
 	_get_next_state()
 
 func physics_update(_delta: float) -> void:
@@ -33,8 +33,6 @@ func set_rotation(angle) -> void:
 		player.set_facing_x(-1)
 		pivot.get_node("BowSprite").flip_v = true
 		pivot.position.x = pivot.absolute_position.x * -1
-		
-		
 	else:
 		player.set_facing_x(1)
 		pivot.get_node("BowSprite").flip_v = false
@@ -52,14 +50,27 @@ func _get_next_state() -> void:
 		else:
 			state_machine.transition_to("Air")
 
+func _summon_arrow() -> void:
+	pass
 
+func fire_arrow() -> void:
+	pass
 
 func enter(_msg := {}) -> void:
 	pivot.get_node("BowSprite").visible = true
 	pivot.get_node("AnimationPlayer").play("Bow Ready")
+	_summon_arrow()
+	
+	
 
 func exit() -> void:
 	pivot.get_node("BowSprite").visible = false
+	pivot.get_node("AnimationPlayer").stop()
+	for child in pivot.get_children():
+		if child.is_in_group("Arrow"):
+			child.queue_free()
+	pivot.get_node("BowShot").stop()
+	
 
 func _bow_idle_state(_delta:float) -> void:
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):

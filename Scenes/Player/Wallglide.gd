@@ -5,6 +5,7 @@ extends PlayerState
 var can_jump := true
 
 func update(_delta: float) -> void:
+	player.gain_ap(-1*_delta)
 	player.set_target_velocity(0, player.stats.air_acceleration, 
 								player.stats.wall_fall_speed, player.stats.wall_acceleration)
 	_get_next_state()

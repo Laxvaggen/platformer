@@ -3,7 +3,7 @@ extends Node2D
 signal level_cleared
 
 func _ready() -> void:
-	z_index = 1
+	pass
 
 func _on_Area2D_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):

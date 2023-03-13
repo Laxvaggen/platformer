@@ -3,6 +3,7 @@ extends PlayerState
 #Available states for transition: Idle
 
 func update(_delta: float) -> void:
+	player.gain_ap(-0.5*_delta)
 	_get_next_state()
 	player.set_facing_x(get_direction_x())
 

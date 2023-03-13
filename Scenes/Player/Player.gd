@@ -15,18 +15,27 @@ var direction_x := facing_x
 
 
 onready var health: int = stats.max_hp
+onready var ap: float = stats.max_ap
 
 onready var state_locked_timer = $StateLockedTimer
 onready var state_machine  = $PlayerStateMachine
+onready var hud = SceneManager.get_node("HUD")
 
 func _ready():
 	$Pivot/BowSprite.visible = false
 	$Pivot/ShieldSprite.visible = false
 	$PlayerStateMachine/Attack/AttackResetTimer.wait_time = 0.2/stats.atk_speed
 	$AnimationPlayer.animation_set_next("Jump to Fall Transition", "Fall")
+	hud.max_health = stats.max_hp
+	hud.max_ap = stats.max_ap
+	hud.change_health_level(health)
+	hud.change_ap_level(ap)
 
 func _process(delta):
 	$PlayerStateMachine.state.update(delta)
+	if ap <= 0:
+		ap = 0
+		take_damage(1, Vector2.ZERO, self)
 
 func _physics_process(delta):
 	$PlayerStateMachine.state.physics_update(delta)
@@ -42,9 +51,22 @@ func take_damage(damage:int, knockback:Vector2, _source) -> void:
 		state_machine.transition_to("Hit")
 		health -= damage
 		velocity = knockback
+		hud.change_health_level(health)
 		emit_signal("damage_taken", damage)
 		if health <= 0:
 			emit_signal("died")
+
+func gain_health(amount:int) -> void:
+	health += amount
+	if health > stats.max_hp:
+		health = stats.max_hp
+	hud.change_health_level(health)
+
+func gain_ap(amount:float) -> void:
+	ap += amount
+	if ap > stats.max_ap:
+		ap = stats.max_ap
+	hud.change_ap_level(ap)
 
 func disable_collision(target) -> void:
 	for child in target.get_children():
@@ -115,6 +137,7 @@ func flip_children(direction, target) -> void:
 
 
 func jump(strength_multiplier:=1) -> void:
+	gain_ap(-5)
 	velocity.y = -stats.jump_strength*strength_multiplier
 	global_position.y -= 2
 

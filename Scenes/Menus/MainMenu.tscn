@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=2]
+[gd_scene load_steps=101 format=2]
 
 [ext_resource path="res://Textures/Inventory/UI - Words/Words With BG/UI - Words3.png" type="Texture" id=1]
 [ext_resource path="res://Textures/Inventory/UI - Words/UI - Words16.png" type="Texture" id=2]
@@ -14,7 +14,11 @@
 [ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/4- Ground (4).png" type="Texture" id=12]
 [ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/3 -Foreground - Mountains (3).png" type="Texture" id=13]
 [ext_resource path="res://Textures/Level/_Backgrounds/Thunder Background/Distant Lightning (32x32).png" type="Texture" id=14]
-[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons1.png" type="Texture" id=15]
+[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons2.png" type="Texture" id=15]
+[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons6.png" type="Texture" id=16]
+[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons7.png" type="Texture" id=17]
+[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons4.png" type="Texture" id=18]
+[ext_resource path="res://Textures/Inventory/UI - ICONS/UI - Icons5.png" type="Texture" id=19]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 14 )
@@ -351,6 +355,25 @@ modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
 texture = ExtResource( 15 )
 region_rect = Rect2( 0, 0, 32, 32 )
 
+[sub_resource type="StyleBoxTexture" id=79]
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.980392, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=80]
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.462745, 0.392157, 0.215686, 1 )
+
+[sub_resource type="StyleBoxTexture" id=81]
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 32, 32 )
+modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
+
+[sub_resource type="StyleBoxTexture" id=82]
+texture = ExtResource( 19 )
+region_rect = Rect2( 0, 0, 32, 32 )
+
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -499,15 +522,15 @@ custom_styles/normal = SubResource( 74 )
 enabled_focus_mode = 0
 keep_pressed_outside = true
 
-[node name="Settings" type="Button" parent="."]
+[node name="Controls" type="Button" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 57.0
-margin_top = 44.0
-margin_right = 96.0
-margin_bottom = 83.0
+margin_left = -93.0
+margin_top = 45.0
+margin_right = -54.0
+margin_bottom = 84.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -515,6 +538,26 @@ custom_styles/hover = SubResource( 75 )
 custom_styles/pressed = SubResource( 76 )
 custom_styles/disabled = SubResource( 77 )
 custom_styles/normal = SubResource( 78 )
+enabled_focus_mode = 0
+keep_pressed_outside = true
+
+[node name="Audio" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -93.0
+margin_top = 4.0
+margin_right = -54.0
+margin_bottom = 43.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 79 )
+custom_styles/pressed = SubResource( 80 )
+custom_styles/disabled = SubResource( 81 )
+custom_styles/normal = SubResource( 82 )
+toggle_mode = true
 enabled_focus_mode = 0
 keep_pressed_outside = true
 
@@ -526,4 +569,5 @@ keep_pressed_outside = true
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_LevelSelect_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
-[connection signal="pressed" from="Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="Controls" to="." method="_on_Controls_pressed"]
+[connection signal="pressed" from="Audio" to="." method="_on_Audio_pressed"]

@@ -2,6 +2,7 @@ extends Resource
 class_name PlayerData
 
 export (int) var max_hp
+export (int) var max_ap
 export (float) var atk_speed
 export (int) var walk_speed
 export (int) var run_speed

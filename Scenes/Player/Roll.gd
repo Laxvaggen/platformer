@@ -19,6 +19,7 @@ func _get_next_state() -> void:
 	state_machine.transition_to("Idle")
 
 func enter(_msg := {}) -> void:
+	player.gain_ap(-3)
 	animation_player.play("Roll", -1, 1.5)
 	tween.interpolate_property(player, "velocity",
 	Vector2(150*player.facing_x, 0), Vector2(0, 0), 1,

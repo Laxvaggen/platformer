@@ -6,4 +6,4 @@ export var knockback := 50
 
 func _init() -> void:
 	collision_layer = 2
-	collision_mask = 0
+	collision_mask = 3

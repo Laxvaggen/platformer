@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Textures/Font/DungeonFont.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scenes/Menus/GameCompleteMenu.gd" type="Script" id=2]
+[ext_resource path="res://Textures/Inventory/UI - Words/Words With BG/UI - Words8.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 128
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.980392, 1, 0.658824, 1 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.462745, 0.392157, 0.215686, 1 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 93, 33 )
+modulate_color = Color( 0.454902, 0.454902, 0.454902, 1 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 93, 33 )
+
+[node name="GameCompleteMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="GameCompleteLabel" type="Label" parent="."]
+margin_left = 84.0
+margin_top = 187.0
+margin_right = 948.0
+margin_bottom = 316.0
+custom_fonts/font = SubResource( 1 )
+text = "GameCompletetext"
+
+[node name="Back" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -53.0
+margin_top = 23.0
+margin_right = 67.0
+margin_bottom = 63.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+enabled_focus_mode = 0
+keep_pressed_outside = true
+
+[connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

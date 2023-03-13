@@ -4,6 +4,7 @@ extends PlayerState
 
 func update(_delta: float) -> void:
 	_get_next_state()
+	player.gain_ap(-1*_delta)
 
 func physics_update(_delta: float) -> void:
 	player.set_target_velocity(0, player.stats.ground_deceleration)

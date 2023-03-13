@@ -2,7 +2,6 @@ extends Node2D
 
 
 func _ready() -> void:
-	z_index = 1
 	$"Ancient Caves Portal".play("use")
 	$"Blood Temple Portal".play("use")
 

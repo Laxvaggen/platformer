@@ -6,6 +6,7 @@ onready var coyote_timer = $"../../CoyoteTimer"
 var coyote := false
 
 func update(_delta: float) -> void:
+	player.gain_ap(-1*_delta)
 	_get_next_state()
 	if animation_player.current_animation == "Jump" and player.velocity.y >= 0:
 		if player.close_to_wall():

@@ -12,6 +12,7 @@ func update(_delta: float) -> void:
 	
 	if Input.is_action_pressed("attack") and !state_machine.state_locked:
 		_play_next_attack()
+		
 	else:
 		_get_next_state()
 
@@ -19,6 +20,7 @@ func physics_update(_delta: float) -> void:
 	player.set_target_velocity(0, player.stats.ground_deceleration, player.stats.max_fall_speed, player.stats.gravity_acceleration)
 
 func _play_next_attack(stab:bool=false) -> void:
+	player.gain_ap(-10)
 	if stab:
 		animation_player.play("Attack 3",-1, player.stats.atk_speed)
 		player.lock_state_switching(0.8/player.stats.atk_speed)

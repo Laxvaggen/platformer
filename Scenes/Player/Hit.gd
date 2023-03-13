@@ -3,6 +3,7 @@ extends PlayerState
 #Available states for transition: Idle, Run, Air (jump), Crouch, Roll, Attack
 
 func update(_delta: float) -> void:
+	player.gain_ap(-10*_delta)
 	_get_next_state()
 
 func physics_update(_delta: float) -> void:
